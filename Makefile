@@ -11,7 +11,7 @@ build:
 
 test:
 	@echo "Testing restaurant-service-server app.."
-	docker run --rm ${IMAGE} npm start
+	docker run --rm ${IMAGE} npm run test
 
 push:
 	@echo "Publishing image to Docker Hub repository"

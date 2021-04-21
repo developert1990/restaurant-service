@@ -10,7 +10,8 @@
         "key-spacing": ["error", { "beforeColon": false }],
         "space-before-blocks": ["error", "always"],
         "object-curly-spacing": ["error", "always"],
-        "array-bracket-spacing": ["error", "never"]
+        "array-bracket-spacing": ["error", "never"],
+        "no-console": ["error", { "allow": ["warn", "error"] }]
     },
     "parser": "babel-eslint"
 }
