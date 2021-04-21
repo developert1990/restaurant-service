@@ -20,6 +20,7 @@
     },
     "homepage": "https://github.com/developert1990/restaurant-service#readme",
     "dependencies": {
+        "aws-sdk": "^2.889.0",
         "cors": "^2.8.5",
         "dotenv": "^8.2.0",
         "eslint": "^7.24.0",
