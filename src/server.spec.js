@@ -4,11 +4,9 @@ import request from 'supertest';
 import { expect } from 'chai';
 
 describe('Server - INTEGRATION TEST', () => {
-
     afterEach(() => {
         server.close();
     });
-
     it('/api/test - Should returns 200 with success message', (done) => {
         const data = { message: 'Success!!' };
         request(server).get('/api/test').send(data).expect((res) => {

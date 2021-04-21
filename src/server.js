@@ -10,6 +10,4 @@ app.use(express.json());
 
 app.use('/api', router);
 
-export const server = app.listen(PORT || 7707, () => {
-    console.log(`Server is running on ${PORT}`);
-});
+export const server = app.listen(PORT || 7707);
