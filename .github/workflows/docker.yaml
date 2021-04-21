@@ -1,9 +1,6 @@
 name: Build docker image and publish on Docker Hub
 
-on: 
-  workflow_run:
-    workflows: ["Test Restaurant Service server"]
-    types: [completed]
+on: push
 
 jobs:
   docker-build-and-publish:
@@ -22,12 +19,14 @@ jobs:
           password: ${{secrets.DOCKERHUB_TOKEN}}
       - name: Setting environment variables
         run: |
-          chmod +x ./scripts/set-env.sh
-          ./scripts/set-env.sh
+          chmod +x ./src/scripts/set-env.sh
+          ./src/scripts/set-env.sh
         env:
           PORT: ${{secrets.PORT}}
         
       - name: Building docker image
         run: make build
+      - name: Test docker image
+        run: make test
       - name: Publishing docker image to docker hub
         run: make push
