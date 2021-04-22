@@ -1,1 +1,2 @@
-export const INVALID_BODY = 'Got an error to add one restaurant information';
+export const INVALID_BODY = 'name, phoneNum and address are required';
+export const ADD_SUCCESS = 'Recorded successfully';

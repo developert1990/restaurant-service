@@ -8,4 +8,5 @@ export const initialDynamo = () => {
     AWS.config.update({
         region: 'us-east-1',
     });
+    return { PORT };
 };

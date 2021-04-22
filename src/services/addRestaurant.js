@@ -1,12 +1,13 @@
-import { INVALID_BODY } from '../constants/messages';
+import { ADD_SUCCESS } from '../constants/messages';
 import { addOneRecord } from '../db';
 
 export const addRestaurant = async (req, res, next) => {
     const { name, phoneNum, address } = req.body;
+
     try {
         await addOneRecord(name, phoneNum, address);
-        res.json({ message: 'Recorded successfully' });
+        res.json(ADD_SUCCESS);
     } catch (error) {
-        res.status(500).send({ message: INVALID_BODY });
+        res.status(500).send(error.message);
     }
 };
