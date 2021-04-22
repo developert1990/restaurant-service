@@ -3,8 +3,12 @@ import AWS from 'aws-sdk';
 import { addOneRecord } from './addOneRecord';
 import { config } from '../config/dynamoConfig';
 import * as createFakePK from '../libs/createRestaurantPK';
-import { testParams } from '../constants/testingConstant';
 
+const testParams = {
+    name: 'sangmean',
+    phoneNum: 7777,
+    address: { City: 'Calgary', Country: 'Canada', street: '57Ave', postalCode: 'T2H' },
+};
 
 describe('db - addOneRecord()', () => {
     const sandbox = sinon.createSandbox();
@@ -23,17 +27,15 @@ describe('db - addOneRecord()', () => {
     });
 
     it('Should call DynamoDB PUT method with correct table name', async () => {
-        const name = testParams.name;
-        const phoneNum = testParams.phoneNum;
-        const address = testParams.address;
+        const { address, name, phoneNum } = testParams;
         await addOneRecord(name, phoneNum, address);
         const params = {
             TableName: config.tableName,
             Item: {
+                name,
+                phoneNum,
+                address,
                 'id': 'fakePK',
-                'name': name,
-                'phoneNum': phoneNum,
-                'address': address,
             },
         };
         sinon.assert.calledWith(clientStub.put, params);

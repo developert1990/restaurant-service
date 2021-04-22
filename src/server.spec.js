@@ -2,9 +2,14 @@ import sinon from 'sinon';
 import request from 'supertest';
 import { server } from './server';
 import * as db_addOneRecord from './db/addOneRecord';
-import { testParams } from './constants/testingConstant';
 import { expect } from 'chai';
 import { ADD_SUCCESS } from './constants/messages';
+
+const testParams = {
+    name: 'sangmean',
+    phoneNum: 7777,
+    address: { City: 'Calgary', Country: 'Canada', street: '57Ave', postalCode: 'T2H' },
+};
 
 describe('Server - INTEGRATION TEST', () => {
     const sandbox = sinon.createSandbox();

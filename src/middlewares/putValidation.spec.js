@@ -1,7 +1,12 @@
 import sinon from 'sinon';
 import { putValidation } from './putValidation';
-import { testParams } from '../constants/testingConstant';
 import { INVALID_BODY } from '../constants/messages';
+
+const testParams = {
+    name: 'sangmean',
+    phoneNum: 7777,
+    address: { City: 'Calgary', Country: 'Canada', street: '57Ave', postalCode: 'T2H' },
+};
 
 describe('middlewares - putValidation()', () => {
     const sandbox = sinon.createSandbox();

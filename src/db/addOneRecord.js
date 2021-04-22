@@ -8,10 +8,10 @@ export const addOneRecord = async (name, phoneNum, address) => {
     const params = {
         TableName: config.tableName,
         Item: {
-            'id': createRestaurantPK(name, street, postalCode),
-            'name': name,
-            'phoneNum': phoneNum,
-            'address': address,
+            name,
+            phoneNum,
+            address,
+            id: createRestaurantPK(name, street, postalCode),
         },
         // ConditionExpression: 'attribute_not_exists(PK)',
     };
