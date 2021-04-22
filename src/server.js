@@ -2,7 +2,7 @@ require('dotenv').config();
 import express from 'express';
 import cors from 'cors';
 import router from './router';
-import { initialDynamo } from './config/dynamoInit';
+import { initialDynamo } from './config/awsConfig';
 
 
 const { PORT } = initialDynamo();
