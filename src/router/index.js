@@ -1,8 +1,9 @@
 import express from 'express';
-import { test } from '../services';
+import { putValidation } from '../middlewares/putValidation';
+import { addRestaurant } from '../services';
 
 const router = express.Router();
 
-router.get('/test', test);
+router.put('/restaurant', putValidation, addRestaurant);
 
 export default router;

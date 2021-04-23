@@ -20,12 +20,12 @@
     },
     "homepage": "https://github.com/developert1990/restaurant-service#readme",
     "dependencies": {
-        "aws-sdk": "^2.888.0",
+        "aws-sdk": "^2.889.0",
         "cors": "^2.8.5",
         "dotenv": "^8.2.0",
         "eslint": "^7.24.0",
         "express": "^4.17.1",
-        "lodash.get": "^4.4.2"
+        "uuid": "^8.3.2"
     },
     "devDependencies": {
         "@babel/cli": "^7.13.14",
