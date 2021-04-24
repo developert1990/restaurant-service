@@ -5,12 +5,11 @@ describe('middlewares - restaurantQueryValidation()', () => {
     const sandbox = sinon.createSandbox();
     let req, res, next, validatingStub;
     beforeEach(() => {
-        validatingStub = sandbox.stub(schema, 'validate');
         req = {
             query: {
-                name: null,
-                street: null,
-                postalCode: null,
+                name: undefined,
+                street: undefined,
+                postalCode: undefined,
             },
         };
         next = sandbox.stub();
@@ -18,20 +17,40 @@ describe('middlewares - restaurantQueryValidation()', () => {
     afterEach(() => {
         sandbox.restore();
     });
-    it('Missed one of data in query - returns an error', () => {
-        const validationResult = { error: { details: [{ message: 'Validation Error' }] } };
-        validatingStub.returns(validationResult);
+
+    it('Missed street query - returns an error', () => {
+        req.query.name = 'testName';
+        req.query.postalCode = 'testPostalCode';
         restaurantQueryValidation(req, res, next);
-        const expectedError = sinon.match.instanceOf(Error).and(sinon.match.has('message', validationResult.error.details[0].message));
+        const expectedError = sinon.match.instanceOf(Error).and(sinon.match.has('message', '"street" is required'));
+        sinon.assert.calledWith(next, expectedError);
+    });
+    it('Missed name query query - returns an error', () => {
+        req.query.street = 'testStreet';
+        req.query.postalCode = 'testPostalCode';
+        restaurantQueryValidation(req, res, next);
+        const expectedError = sinon.match.instanceOf(Error).and(sinon.match.has('message', '"name" is required'));
+        sinon.assert.calledWith(next, expectedError);
+    });
+    it('Missed postalCode query - returns an error', () => {
+        req.query.name = 'testName';
+        req.query.street = 'testStreet';
+        restaurantQueryValidation(req, res, next);
+        const expectedError = sinon.match.instanceOf(Error).and(sinon.match.has('message', '"postalCode" is required'));
+        sinon.assert.calledWith(next, expectedError);
+    });
+    it('return Generic error message when details[0] path is not exist', () => {
+        validatingStub = sandbox.stub(schema, 'validate');
+        const validateionResult = { error: { details: undefined } };
+        validatingStub.returns(validateionResult);
+        restaurantQueryValidation(req, res, next);
+        const expectedError = sinon.match.instanceOf(Error).and(sinon.match.has('message', 'Generic error message'));
         sinon.assert.calledWith(next, expectedError);
     });
     it('Call next() when inputs are all valid - Success', () => {
-        const successResult = {
-            name: 'sangmean',
-            phoneNum: 7777,
-            address: { City: 'Calgary', Country: 'Canada', street: '57Ave', postalCode: 'T2H' },
-        };
-        validatingStub.returns(successResult);
+        req.query.name = 'testName';
+        req.query.street = 'testStreet';
+        req.query.postalCode = 'testPostalCode';
         restaurantQueryValidation(req, res, next);
         sinon.assert.calledOnce(next);
     });

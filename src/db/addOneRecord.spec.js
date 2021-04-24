@@ -28,7 +28,7 @@ describe('db - addOneRecord()', () => {
 
     it('Should call DynamoDB PUT method with correct table name', async () => {
         const { address, name, phoneNum } = testParams;
-        await addOneRecord(name, phoneNum, address);
+        await addOneRecord({ name, phoneNum, address });
         const params = {
             TableName: config.tableName,
             Item: {
