@@ -1,10 +1,10 @@
 import express from 'express';
-import { putValidation, getOneValidation } from '../middlewares';
-import { addRestaurant } from '../services';
-import { getOneRestaurant } from '../services/getOneRestaurant';
+import { putValidation } from '../middlewares/putValidation';
+import { restaurantQueryValidation } from '../middlewares/restaurantQueryValidation';
+import { addRestaurant, deleteRestaurant } from '../services';
 
 const router = express.Router();
 
 router.put('/restaurant', putValidation, addRestaurant);
-router.get('/restaurant', getOneValidation, getOneRestaurant);
+router.delete('/restaurant', restaurantQueryValidation, deleteRestaurant);
 export default router;

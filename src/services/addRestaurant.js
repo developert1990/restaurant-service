@@ -5,7 +5,7 @@ export const addRestaurant = async (req, res, next) => {
     const { name, phoneNum, address } = req.body;
 
     try {
-        await addOneRecord(name, phoneNum, address);
+        await addOneRecord({ name, phoneNum, address });
         res.json(ADD_SUCCESS);
     } catch (error) {
         res.status(500).send(error.message);
