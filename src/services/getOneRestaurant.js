@@ -2,8 +2,8 @@ import { getOneRecord } from '../db/getOneRecord';
 import { createRestaurantPK } from '../libs/createRestaurantPK';
 
 export const getOneRestaurant = async (req, res, next) => {
-    const { name, street, postalCode } = req.query;
-    const id = createRestaurantPK({ name, street, postalCode });
+    const { name, firstName, userName } = req.query;
+    const id = createRestaurantPK({ firstName, userName });
     try {
         const result = await getOneRecord({ id, name });
         res.json(result);

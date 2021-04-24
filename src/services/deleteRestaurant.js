@@ -3,8 +3,8 @@ import { deleteOneRecord } from '../db';
 import { createRestaurantPK } from '../libs/createRestaurantPK';
 
 export const deleteRestaurant = async (req, res, next) => {
-    const { name, street, postalCode } = req.query;
-    const id = createRestaurantPK({ name, street, postalCode });
+    const { name, firstName, userName } = req.query;
+    const id = createRestaurantPK({ firstName, userName });
     try {
         await deleteOneRecord({ id, name });
         res.json(DELETE_SUCCESS);
