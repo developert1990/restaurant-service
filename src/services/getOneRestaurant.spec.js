@@ -64,5 +64,4 @@ describe('Services - getOneRestaurant', () => {
         sinon.assert.calledWith(res.status, 500);
         sinon.assert.calledWith(sendStub, 'Got an error to get one record');
     });
-
 });

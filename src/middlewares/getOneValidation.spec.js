@@ -1,18 +1,15 @@
 import sinon from 'sinon';
-import { getOneValidation, schema } from './getOneValidation';
-
-
+import { getOneValidation } from './getOneValidation';
 
 describe('middlewares - getOneValidation()', () => {
     const sandbox = sinon.createSandbox();
-    let req, res, next, validatingStub;
+    let req, res, next;
     beforeEach(() => {
-        validatingStub = sandbox.stub(schema, 'validate');
         req = {
             query: {
-                name: null,
-                street: null,
-                postalCode: null,
+                name: undefined,
+                street: undefined,
+                postalCode: undefined,
             },
         };
         next = sandbox.stub();
@@ -20,20 +17,33 @@ describe('middlewares - getOneValidation()', () => {
     afterEach(() => {
         sandbox.restore();
     });
-    it('Missed one of data in query - returns an error', () => {
-        const validationResult = { error: { details: [{ message: 'Validation Error' }] } };
-        validatingStub.returns(validationResult);
+
+    it('Missed street query - returns an error', () => {
+        req.query.name = 'testName';
+        req.query.postalCode = 'testPostalCode';
         getOneValidation(req, res, next);
-        const expectedError = sinon.match.instanceOf(Error).and(sinon.match.has('message', validationResult.error.details[0].message));
+        const expectedError = sinon.match.instanceOf(Error).and(sinon.match.has('message', '"street" is required'));
         sinon.assert.calledWith(next, expectedError);
     });
+    it('Missed name query query - returns an error', () => {
+        req.query.street = 'testStreet';
+        req.query.postalCode = 'testPostalCode';
+        getOneValidation(req, res, next);
+        const expectedError = sinon.match.instanceOf(Error).and(sinon.match.has('message', '"name" is required'));
+        sinon.assert.calledWith(next, expectedError);
+    });
+    it('Missed postalCode query - returns an error', () => {
+        req.query.name = 'testName';
+        req.query.street = 'testStreet';
+        getOneValidation(req, res, next);
+        const expectedError = sinon.match.instanceOf(Error).and(sinon.match.has('message', '"postalCode" is required'));
+        sinon.assert.calledWith(next, expectedError);
+    });
+
     it('Call next() when inputs are all valid - Success', () => {
-        const successResult = {
-            name: 'sangmean',
-            phoneNum: 7777,
-            address: { City: 'Calgary', Country: 'Canada', street: '57Ave', postalCode: 'T2H' },
-        };
-        validatingStub.returns(successResult);
+        req.query.name = 'testName';
+        req.query.street = 'testStreet';
+        req.query.postalCode = 'testPostalCode';
         getOneValidation(req, res, next);
         sinon.assert.calledOnce(next);
     });
