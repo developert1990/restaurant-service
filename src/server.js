@@ -4,7 +4,6 @@ import cors from 'cors';
 import router from './router';
 import { initialDynamo } from './config/awsConfig';
 
-
 const { PORT } = initialDynamo();
 const app = express();
 app.use(cors());
