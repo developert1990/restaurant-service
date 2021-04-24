@@ -11,7 +11,8 @@
         "space-before-blocks": ["error", "always"],
         "object-curly-spacing": ["error", "always"],
         "array-bracket-spacing": ["error", "never"],
-        "no-console": ["error", { "allow": ["warn", "error"] }]
+        "no-console": ["error", { "allow": ["warn", "error"] }],
+        "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }]
     },
     "parser": "babel-eslint"
 }

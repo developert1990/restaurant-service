@@ -7,5 +7,4 @@ const router = express.Router();
 
 router.put('/restaurant', putValidation, addRestaurant);
 router.delete('/restaurant', restaurantQueryValidation, deleteRestaurant);
-
 export default router;
