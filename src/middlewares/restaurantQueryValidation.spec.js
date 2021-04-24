@@ -1,5 +1,5 @@
 import sinon from 'sinon';
-import { getOneValidation } from './getOneValidation';
+import { getOneValidation } from './restaurantQueryValidation';
 
 describe('middlewares - getOneValidation()', () => {
     const sandbox = sinon.createSandbox();
