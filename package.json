@@ -6,6 +6,7 @@
     "scripts": {
         "start": "nodemon --exec babel-node src/server",
         "test": "mocha",
+        "dev": "mocha --watch",
         "lint": "eslint . --ext .js --ignore-pattern node_modules/ --fix"
     },
     "repository": {

@@ -2,7 +2,7 @@ import AWS from 'aws-sdk';
 import { config } from '../config/dynamoConfig';
 import { createRestaurantPK } from '../libs/createRestaurantPK';
 
-export const addOneRecord = async ({ name, phoneNum, address }) => {
+export const addOneRecord = async ({ name, phoneNum, address, firstName, userName }) => {
     const { street, postalCode } = address;
     const client = new AWS.DynamoDB.DocumentClient();
     const params = {
@@ -11,9 +11,8 @@ export const addOneRecord = async ({ name, phoneNum, address }) => {
             name,
             phoneNum,
             address,
-            id: createRestaurantPK({ name, street, postalCode }),
+            id: createRestaurantPK({ firstName, userName }),
         },
-        // ConditionExpression: 'attribute_not_exists(PK)',
     };
     return client.put(params).promise();
 };

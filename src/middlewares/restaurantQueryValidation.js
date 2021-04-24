@@ -3,8 +3,8 @@ import lodashGet from 'lodash.get';
 
 export const schema = Joi.object({
     name: Joi.string().required(),
-    street: Joi.required(),
-    postalCode: Joi.string().required(),
+    firstName: Joi.string().required(),
+    userName: Joi.string().required(),
 });
 
 export const restaurantQueryValidation = (req, res, next) => {
