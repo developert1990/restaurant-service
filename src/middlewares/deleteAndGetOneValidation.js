@@ -7,7 +7,7 @@ export const schema = Joi.object({
     userName: Joi.string().required(),
 });
 
-export const restaurantQueryValidation = (req, res, next) => {
+export const deleteAndGetOneValidation = (req, res, next) => {
     const result = schema.validate(req.query);
     if (result.error) {
         const errorMsg = lodashGet(result, 'error.details[0].message', 'Generic error message');
