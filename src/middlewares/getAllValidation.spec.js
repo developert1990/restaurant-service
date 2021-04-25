@@ -1,9 +1,10 @@
 import sinon from 'sinon';
-import { getAllValidation, schema } from './getAllValidation';
+import { getAllValidation } from './getAllValidation';
+import Joi from 'joi';
 
 describe('middlewares - getAllValidation()', () => {
     const sandbox = sinon.createSandbox();
-    let req, res, next, validatingStub;
+    let req, res, next;
     beforeEach(() => {
         req = {
             query: {
@@ -29,8 +30,12 @@ describe('middlewares - getAllValidation()', () => {
         sinon.assert.calledWith(next, expectedError);
     });
     it('Return Generic error message when details[0] path is not exist', () => {
-        validatingStub = sandbox.stub(schema, 'validate');
-        const validationResult = validatingStub.returns({ error: { details: undefined } });
+        const validateStub = sandbox.stub();
+        const schemaStub = {
+            validate: validateStub,
+        };
+        sandbox.stub(Joi, 'object').returns(schemaStub);
+        schemaStub.validate.returns({ error: { details: undefined } });
         getAllValidation(req, res, next);
         const expectedError = sinon.match.instanceOf(Error).and(sinon.match.has('message', 'Generic error message'));
         sinon.assert.calledWith(next, expectedError);
