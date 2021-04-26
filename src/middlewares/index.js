@@ -1,2 +1,3 @@
-export * from './getOneValidation';
+export * from './deleteAndGetOneValidation';
 export * from './putValidation';
+export * from './getAllValidation';
