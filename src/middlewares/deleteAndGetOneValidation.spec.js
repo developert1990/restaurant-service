@@ -21,6 +21,7 @@ describe('middlewares - deleteAndGetOneValidation()', () => {
 
     it('Missed street query - returns an error', () => {
         req.query.name = 'testName';
+        req.query.postalCode = 'testT2HTS5';
         req.query.userName = 'testRserName';
         deleteAndGetOneValidation(req, res, next);
         const expectedError = sinon.match.instanceOf(Error).and(sinon.match.has('message', '"firstName" is required'));
@@ -28,6 +29,7 @@ describe('middlewares - deleteAndGetOneValidation()', () => {
     });
     it('Missed name query query - returns an error', () => {
         req.query.street = 'testStreet';
+        req.query.postalCode = 'testT2HTS5';
         req.query.userName = 'testUserName';
         deleteAndGetOneValidation(req, res, next);
         const expectedError = sinon.match.instanceOf(Error).and(sinon.match.has('message', '"name" is required'));
@@ -35,9 +37,18 @@ describe('middlewares - deleteAndGetOneValidation()', () => {
     });
     it('Missed postalCode query - returns an error', () => {
         req.query.name = 'testName';
+        req.query.postalCode = 'testT2HTS5';
         req.query.firstName = 'testFirstName';
         deleteAndGetOneValidation(req, res, next);
         const expectedError = sinon.match.instanceOf(Error).and(sinon.match.has('message', '"userName" is required'));
+        sinon.assert.calledWith(next, expectedError);
+    });
+    it('Missed postalCode query - returns an error', () => {
+        req.query.name = 'testName';
+        req.query.firstName = 'testFirstName';
+        req.query.userName = 'testUserName';
+        deleteAndGetOneValidation(req, res, next);
+        const expectedError = sinon.match.instanceOf(Error).and(sinon.match.has('message', '"postalCode" is required'));
         sinon.assert.calledWith(next, expectedError);
     });
     it('return Generic error message when details[0] path is not exist', () => {
@@ -53,6 +64,7 @@ describe('middlewares - deleteAndGetOneValidation()', () => {
     });
     it('Call next() when inputs are all valid - Success', () => {
         req.query.name = 'testName';
+        req.query.postalCode = 'testT2HTS5';
         req.query.firstName = 'testFirstName';
         req.query.userName = 'testUserName';
         deleteAndGetOneValidation(req, res, next);

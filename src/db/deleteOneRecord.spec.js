@@ -4,8 +4,8 @@ import { deleteOneRecord } from './deleteOneRecord';
 import { config } from '../config/dynamoConfig';
 
 const testParams = {
+    ownerId: 'testOwnerID',
     id: 'testID',
-    name: 'testName',
 };
 
 describe('db - deleteOneRecord()', () => {
@@ -21,11 +21,11 @@ describe('db - deleteOneRecord()', () => {
         sandbox.restore();
     });
     it('Should call DynamoDB DELETE method with correct table name', async () => {
-        const { id, name } = testParams;
-        await deleteOneRecord({ id, name });
+        const { ownerId, id } = testParams;
+        await deleteOneRecord({ ownerId, id });
         const params = {
             TableName: config.tableName,
-            Key: { id, name },
+            Key: { ownerId, id },
         };
         sinon.assert.calledWith(clientStub.delete, params);
         sinon.assert.calledOnce(promiseStub);

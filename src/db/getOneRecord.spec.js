@@ -5,7 +5,7 @@ import { config } from '../config/dynamoConfig';
 
 describe('db - getOneRecord()', () => {
     const sandbox = sinon.createSandbox();
-    let id, name;
+    let id, ownerId;
     const promiseStub = sandbox.stub();
     const clientStub = {
         get: sandbox.stub().returns({
@@ -20,11 +20,11 @@ describe('db - getOneRecord()', () => {
     });
     it('Should call DynamoDB get method', async () => {
         id = 'fakePK';
-        name = 'fakeName';
-        await getOneRecord({ id, name });
+        ownerId = 'fakeOwnerId';
+        await getOneRecord({ ownerId, id });
         const params = {
             TableName: config.tableName,
-            Key: { id, name },
+            Key: { ownerId, id },
         };
         sinon.assert.calledWith(clientStub.get, params);
         sinon.assert.calledOnce(promiseStub);

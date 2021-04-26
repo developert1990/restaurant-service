@@ -1,16 +1,16 @@
 import AWS from 'aws-sdk';
 import { config } from '../config/dynamoConfig';
 
-export const getAllRecords = async (id) => {
+export const getAllRecords = async (ownerId) => {
     const client = new AWS.DynamoDB.DocumentClient();
     const params = {
         TableName: config.tableName,
-        KeyConditionExpression: '#id = :id',
+        KeyConditionExpression: '#ownerId = :ownerId',
         ExpressionAttributeNames: {
-            '#id': 'id',
+            '#ownerId': 'ownerId',
         },
         ExpressionAttributeValues: {
-            ':id': id,
+            ':ownerId': ownerId,
         },
     };
     return client.query(params).promise();

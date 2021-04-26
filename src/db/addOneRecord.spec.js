@@ -3,6 +3,7 @@ import AWS from 'aws-sdk';
 import { addOneRecord } from './addOneRecord';
 import { config } from '../config/dynamoConfig';
 import * as createFakePK from '../libs/createRestaurantPK';
+import * as createFakeID from '../libs/createRestaurantID';
 
 const testParams = {
     name: 'sangmean',
@@ -13,6 +14,7 @@ const testParams = {
 describe('db - addOneRecord()', () => {
     const sandbox = sinon.createSandbox();
     sandbox.stub(createFakePK, 'createRestaurantPK').returns('fakePK');
+    sandbox.stub(createFakeID, 'createRestaurantID').returns('fakeID');
     const promiseStub = sandbox.stub();
     const clientStub = {
         put: sandbox.stub().returns({ promise: promiseStub }),
@@ -35,7 +37,8 @@ describe('db - addOneRecord()', () => {
                 name,
                 phoneNum,
                 address,
-                'id': 'fakePK',
+                ownerId: 'fakePK',
+                id: 'fakeID',
             },
         };
         sinon.assert.calledWith(clientStub.put, params);

@@ -1,11 +1,12 @@
 import AWS from 'aws-sdk';
 import { config } from '../config/dynamoConfig';
 
-export const deleteOneRecord = async ({ id, name }) => {
+// Need PK and Sort Key to delete, getOne a data.
+export const deleteOneRecord = async ({ ownerId, id }) => {
     const client = new AWS.DynamoDB.DocumentClient();
     const params = {
         TableName: config.tableName,
-        Key: { id, name },
+        Key: { ownerId, id },
     };
     return client.delete(params).promise();
 };

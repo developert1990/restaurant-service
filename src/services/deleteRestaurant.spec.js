@@ -2,21 +2,24 @@ import sinon from 'sinon';
 import { deleteRestaurant } from './deleteRestaurant';
 import * as db_deleteOneRecord from '../db/deleteOneRecord';
 import * as createFakePK from '../libs/createRestaurantPK';
+import * as createFakeID from '../libs/createRestaurantID';
 import { DELETE_SUCCESS } from '../constants/messages';
 
 describe('Services - deleteRestaurant', () => {
     const sandbox = sinon.createSandbox();
-    let req, res, next, jsonStub, sendStub, deleteOneRecordStub, createFakePKStub;
+    let req, res, next, jsonStub, sendStub, deleteOneRecordStub, createFakePKStub, createFakeIDStub;
     beforeEach(() => {
         jsonStub = sandbox.stub();
         sendStub = sandbox.stub();
         deleteOneRecordStub = sandbox.stub(db_deleteOneRecord, 'deleteOneRecord');
         createFakePKStub = sandbox.stub(createFakePK, 'createRestaurantPK').returns('fakePK');
+        createFakeIDStub = sandbox.stub(createFakeID, 'createRestaurantID').returns('fakeID');
         req = {
             query: {
                 name: undefined,
-                street: undefined,
                 postalCode: undefined,
+                firstName: undefined,
+                userName: undefined,
             },
         };
         res = {

@@ -1,8 +1,9 @@
 import AWS from 'aws-sdk';
 import { config } from '../config/dynamoConfig';
-import { createRestaurantPK } from '../libs/createRestaurantPK';
+import { createRestaurantID, createRestaurantPK } from '../libs';
 
 export const addOneRecord = async ({ name, phoneNum, address, firstName, userName }) => {
+    const { postalCode } = address;
     const client = new AWS.DynamoDB.DocumentClient();
     const params = {
         TableName: config.tableName,
@@ -10,7 +11,8 @@ export const addOneRecord = async ({ name, phoneNum, address, firstName, userNam
             name,
             phoneNum,
             address,
-            id: createRestaurantPK({ firstName, userName }),
+            ownerId: createRestaurantPK({ firstName, userName }),
+            id: createRestaurantID({ name, postalCode }),
         },
     };
     return client.put(params).promise();
