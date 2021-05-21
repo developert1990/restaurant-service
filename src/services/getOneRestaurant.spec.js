@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 import { getOneRestaurant } from './getOneRestaurant';
 import * as db_getOneRecord from '../db/getOneRecord';
-import * as createFakePK from '../libs/createRestaurantPK';
+import * as createFakePK from '../libs/createRestaurantSK';
 import * as createFakeID from '../libs/createRestaurantID';
 
 const mockData = {
@@ -32,7 +32,7 @@ describe('Services - getOneRestaurant', () => {
         jsonStub = sandbox.stub();
         sendStub = sandbox.stub();
         getOneRecordStub = sandbox.stub(db_getOneRecord, 'getOneRecord');
-        sandbox.stub(createFakePK, 'createRestaurantPK').returns('fakePK');
+        sandbox.stub(createFakePK, 'createRestaurantSK').returns('fakePK');
         sandbox.stub(createFakeID, 'createRestaurantID').returns('fakeID');
         req = {
             query: {

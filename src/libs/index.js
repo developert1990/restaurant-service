@@ -1,2 +1,2 @@
-export * from './createRestaurantPK';
+export * from './createRestaurantSK';
 export * from './createRestaurantID';

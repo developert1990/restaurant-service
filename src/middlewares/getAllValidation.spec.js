@@ -8,8 +8,8 @@ describe('middlewares - getAllValidation()', () => {
     beforeEach(() => {
         req = {
             query: {
-                firstName: undefined,
-                userName: undefined,
+                name: undefined,
+                postalCode: undefined,
             },
         };
         next = sandbox.stub();
@@ -17,16 +17,16 @@ describe('middlewares - getAllValidation()', () => {
     afterEach(() => {
         sandbox.restore();
     });
-    it('Missed firstName query - return error', () => {
-        req.query.userName = 'testUserName';
+    it('Missed name query - return error', () => {
+        req.query.postalCode = 'testpostalCode';
         getAllValidation(req, res, next);
-        const expectedError = sinon.match.instanceOf(Error).and(sinon.match.has('message', '"firstName" is required'));
+        const expectedError = sinon.match.instanceOf(Error).and(sinon.match.has('message', '"name" is required'));
         sinon.assert.calledWith(next, expectedError);
     });
-    it('Missed userName query - return error', () => {
-        req.query.firstName = 'testFirstName';
+    it('Missed postalCode query - return error', () => {
+        req.query.name = 'testname';
         getAllValidation(req, res, next);
-        const expectedError = sinon.match.instanceOf(Error).and(sinon.match.has('message', '"userName" is required'));
+        const expectedError = sinon.match.instanceOf(Error).and(sinon.match.has('message', '"postalCode" is required'));
         sinon.assert.calledWith(next, expectedError);
     });
     it('Return Generic error message when details[0] path is not exist', () => {
@@ -41,8 +41,8 @@ describe('middlewares - getAllValidation()', () => {
         sinon.assert.calledWith(next, expectedError);
     });
     it('Call next() when inputs are all valid - success', () => {
-        req.query.firstName = 'testFirstName';
-        req.query.userName = 'testUserName';
+        req.query.name = 'testname';
+        req.query.postalCode = 'testpostalCode';
         getAllValidation(req, res, next);
         sinon.assert.calledOnce(next);
     });

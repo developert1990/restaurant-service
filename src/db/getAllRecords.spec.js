@@ -5,7 +5,7 @@ import { config } from '../config/dynamoConfig';
 
 describe('db - getAllRecords()', () => {
     const sandbox = sinon.createSandbox();
-    const ownerId = 'fakeOwnerID';
+    const id = 'fakeid';
     const promiseStub = sandbox.stub();
     const clientStub = {
         query: sandbox.stub().returns({
@@ -19,16 +19,18 @@ describe('db - getAllRecords()', () => {
         sandbox.restore();
     });
     it('Should call DynamoDB get method', async () => {
-        await getAllRecords(ownerId);
+        await getAllRecords(id);
         const params = {
             TableName: config.tableName,
-            KeyConditionExpression: '#ownerId = :ownerId',
+            KeyConditionExpression: '#id = :id',
             ExpressionAttributeNames: {
-                '#ownerId': 'ownerId',
+                '#id': 'id',
             },
             ExpressionAttributeValues: {
-                ':ownerId': ownerId,
+                ':id': id,
             },
+            Limit: 10,
+            ScanIndexForward: false,
         };
         sinon.assert.calledWith(clientStub.query, params);
         sinon.assert.calledOnce(promiseStub);

@@ -1,17 +1,29 @@
 import AWS from 'aws-sdk';
 import { config } from '../config/dynamoConfig';
 
-export const getAllRecords = async (ownerId) => {
+export const getAllRecords = async (id) => {
     const client = new AWS.DynamoDB.DocumentClient();
     const params = {
         TableName: config.tableName,
-        KeyConditionExpression: '#ownerId = :ownerId',
+        KeyConditionExpression: '#id = :id',
         ExpressionAttributeNames: {
-            '#ownerId': 'ownerId',
+            '#id': 'id',
         },
         ExpressionAttributeValues: {
-            ':ownerId': ownerId,
+            ':id': id,
         },
+        Limit: 10,
+        ScanIndexForward: false,
     };
+    // const checkFirstCall = () => {
+    //     if (!itemId && !charityId) {
+    //         return params;
+    //     }
+    //     params.ExclusiveStartKey = {
+    //         id,
+    //         ownerId,
+    //     };
+    //     return params;
+    // }; 
     return client.query(params).promise();
 };
