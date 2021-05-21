@@ -2,7 +2,7 @@ import sinon from 'sinon';
 import AWS from 'aws-sdk';
 import { addOneRecord } from './addOneRecord';
 import { config } from '../config/dynamoConfig';
-import * as createFakePK from '../libs/createRestaurantPK';
+import * as createFakePK from '../libs/createRestaurantSK';
 import * as createFakeID from '../libs/createRestaurantID';
 
 const testParams = {
@@ -13,14 +13,14 @@ const testParams = {
 
 describe('db - addOneRecord()', () => {
     const sandbox = sinon.createSandbox();
-    sandbox.stub(createFakePK, 'createRestaurantPK').returns('fakePK');
-    sandbox.stub(createFakeID, 'createRestaurantID').returns('fakeID');
     const promiseStub = sandbox.stub();
     const clientStub = {
         put: sandbox.stub().returns({ promise: promiseStub }),
     };
 
     beforeEach(() => {
+        sandbox.stub(createFakePK, 'createRestaurantSK').returns('fakePK');
+        sandbox.stub(createFakeID, 'createRestaurantID').returns('fakeID');
         sandbox.stub(AWS.DynamoDB, 'DocumentClient').returns(clientStub);
     });
 

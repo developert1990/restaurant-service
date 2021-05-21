@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 import { deleteRestaurant } from './deleteRestaurant';
 import * as db_deleteOneRecord from '../db/deleteOneRecord';
-import * as createFakePK from '../libs/createRestaurantPK';
+import * as createFakePK from '../libs/createRestaurantSK';
 import * as createFakeID from '../libs/createRestaurantID';
 import { DELETE_SUCCESS } from '../constants/messages';
 
@@ -12,7 +12,7 @@ describe('Services - deleteRestaurant', () => {
         jsonStub = sandbox.stub();
         sendStub = sandbox.stub();
         deleteOneRecordStub = sandbox.stub(db_deleteOneRecord, 'deleteOneRecord');
-        createFakePKStub = sandbox.stub(createFakePK, 'createRestaurantPK').returns('fakePK');
+        createFakePKStub = sandbox.stub(createFakePK, 'createRestaurantSK').returns('fakePK');
         createFakeIDStub = sandbox.stub(createFakeID, 'createRestaurantID').returns('fakeID');
         req = {
             query: {

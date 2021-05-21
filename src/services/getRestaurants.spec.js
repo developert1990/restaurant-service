@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 import * as db_getAllRecords from '../db/getAllRecords';
 import { getRestaurants } from './getRestaurants';
-import * as createFakePK from '../libs/createRestaurantPK';
+import * as createFakePK from '../libs/createRestaurantID';
 
 const mockData = {
     Items: [
@@ -20,18 +20,18 @@ const mockData = {
     ],
 };
 
-describe('Services - getREstaurants', () => {
+describe('Services - getRestaurants', () => {
     const sandbox = sinon.createSandbox();
     let req, res, next, jsonStub, sendStub, getAllRecordsStub;
     beforeEach(() => {
         jsonStub = sandbox.stub();
         sendStub = sandbox.stub();
         getAllRecordsStub = sandbox.stub(db_getAllRecords, 'getAllRecords');
-        sandbox.stub(createFakePK, 'createRestaurantPK').returns('fakePK');
+        sandbox.stub(createFakePK, 'createRestaurantID').returns('fakePK');
         req = {
             query: {
-                firstName: undefined,
-                userName: undefined,
+                name: undefined,
+                postalCode: undefined,
             },
         };
         res = {

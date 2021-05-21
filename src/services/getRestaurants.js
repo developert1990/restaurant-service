@@ -1,11 +1,11 @@
 import { getAllRecords } from '../db';
-import { createRestaurantPK } from '../libs/createRestaurantPK';
+import { createRestaurantID } from '../libs';
 
 export const getRestaurants = async (req, res, next) => {
-    const { firstName, userName } = req.query;
-    const ownerId = createRestaurantPK({ firstName, userName });
+    const { name, postalCode } = req.query;
+    const id = createRestaurantID({ name, postalCode });
     try {
-        const results = await getAllRecords(ownerId);
+        const results = await getAllRecords(id);
         res.json(results);
     } catch (error) {
         res.status(500).send(error.message);

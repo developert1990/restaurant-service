@@ -3,8 +3,8 @@ import lodashGet from 'lodash.get';
 
 export const getAllValidation = (req, res, next) => {
     const schema = Joi.object({
-        firstName: Joi.string().required(),
-        userName: Joi.string().required(),
+        name: Joi.string().required(),
+        postalCode: Joi.string().required(),
     });
 
     const result = schema.validate(req.query);

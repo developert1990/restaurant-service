@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk';
 import { config } from '../config/dynamoConfig';
-import { createRestaurantID, createRestaurantPK } from '../libs';
+import { createRestaurantID, createRestaurantSK } from '../libs';
 
 export const addOneRecord = async ({ name, phoneNum, address, firstName, userName }) => {
     const { postalCode } = address;
@@ -11,7 +11,7 @@ export const addOneRecord = async ({ name, phoneNum, address, firstName, userNam
             name,
             phoneNum,
             address,
-            ownerId: createRestaurantPK({ firstName, userName }),
+            ownerId: createRestaurantSK({ firstName, userName }),
             id: createRestaurantID({ name, postalCode }),
         },
     };
