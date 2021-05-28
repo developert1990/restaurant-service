@@ -1,0 +1,10 @@
+Resources:
+  UserS3:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: cloudformation-users3-dev
+# -> createS3 가 있는 폴더로 이동
+# - aws cloudformation create-stack --template-body file://createS3.yaml --stack-name cloudFormation-userStack-dev --profile default --capabilities CAPABILITY_IAM
+# -> body 의 path가 저렇기 때문에 root로 이동 cd ../
+# - aws s3api put-object --bucket cloudformation-users3-dev --body ./src/services/user/s3Upload.zip --key sangmeanTest 
+# - aws cloudformation deploy --template-file ./cloudformation/user.yaml --stack-name cloudFormation-userStack-dev --capabilities CAPABILITY_IAM

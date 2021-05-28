@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 import { addRestaurant } from './addRestaurant';
-import * as db_addOne from '../db/addOneRecord';
-import { ADD_SUCCESS } from '../constants/messages';
+import * as db_addOne from '../../db/restaurant/addOneRecord';
+import { ADD_SUCCESS } from '../../constants/messages';
 
 describe('Services - addRestaurant', () => {
     const sandbox = sinon.createSandbox();

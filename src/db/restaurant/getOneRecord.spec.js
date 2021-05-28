@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 import { getOneRecord } from './getOneRecord';
 import AWS from 'aws-sdk';
-import { config } from '../config/dynamoConfig';
+import { config } from '../../config/dynamoConfig';
 
 describe('db - getOneRecord()', () => {
     const sandbox = sinon.createSandbox();

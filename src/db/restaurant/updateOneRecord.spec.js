@@ -1,9 +1,9 @@
 import sinon from 'sinon';
 import { updateOneRecord } from './updateOneRecord';
 import AWS from 'aws-sdk';
-import { config } from '../config/dynamoConfig';
-import * as createFakeSK from '../libs/createRestaurantSK';
-import * as createFakeID from '../libs/createRestaurantID';
+import { config } from '../../config/dynamoConfig';
+import * as createFakeSK from '../../libs/createRestaurantSK';
+import * as createFakeID from '../../libs/createRestaurantID';
 
 describe('db - updateOneRecord()', () => {
     const sandbox = sinon.createSandbox();
@@ -32,6 +32,7 @@ describe('db - updateOneRecord()', () => {
                 id: 'fakeID',
                 ownerId: 'fakeSK',
             },
+            ReturnValues: 'ALL_OLD',
         };
         // sinon.assert.calledWith(clientStub.update, params);
         sinon.assert.calledOnce(promiseStub);

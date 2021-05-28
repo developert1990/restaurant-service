@@ -1,12 +1,13 @@
 import AWS from 'aws-sdk';
-import { config } from '../config/dynamoConfig';
-import { createRestaurantID, createRestaurantSK } from '../libs';
+import { config } from '../../config/dynamoConfig';
+import { createRestaurantID, createRestaurantSK } from '../../libs';
 
 // if change name or postalCode or firstName, userName => will create new row. => 업데이트 할때 프론트에서 이 네개는 못바꾸게 하면될듯
 export const updateOneRecord = async ({ name, phoneNum, address, firstName, userName }) => {
     const { postalCode } = address;
     const client = new AWS.DynamoDB.DocumentClient();
-
+    const id = createRestaurantID({ name, postalCode });
+    const ownerId = createRestaurantSK({ firstName, userName });
     let getUpdateParams = (attributes) => {
         const attributeNames = {};
         const attributeValues = {};
@@ -26,9 +27,10 @@ export const updateOneRecord = async ({ name, phoneNum, address, firstName, user
     let baseParams = {
         TableName: config.tableName,
         Key: {
-            id: createRestaurantID({ name, postalCode }),
-            ownerId: createRestaurantSK({ firstName, userName }),
+            id,
+            ownerId,
         },
+        ReturnValues: 'ALL_OLD',
     };
     const params = {
         ...baseParams, ...getUpdateParams({ name, phoneNum, address, firstName, userName }),

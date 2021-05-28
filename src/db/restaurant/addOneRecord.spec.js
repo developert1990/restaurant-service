@@ -1,9 +1,9 @@
 import sinon from 'sinon';
 import AWS from 'aws-sdk';
 import { addOneRecord } from './addOneRecord';
-import { config } from '../config/dynamoConfig';
-import * as createFakePK from '../libs/createRestaurantSK';
-import * as createFakeID from '../libs/createRestaurantID';
+import { config } from '../../config/dynamoConfig';
+import * as createFakePK from '../../libs/createRestaurantSK';
+import * as createFakeID from '../../libs/createRestaurantID';
 
 const testParams = {
     name: 'sangmean',

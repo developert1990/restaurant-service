@@ -1,5 +1,5 @@
-import { ADD_SUCCESS } from '../constants/messages';
-import { addOneRecord } from '../db';
+import { ADD_SUCCESS } from '../../constants/messages';
+import { addOneRecord } from '../../db/restaurant';
 
 export const addRestaurant = async (req, res, next) => {
     const { name, phoneNum, address, firstName, userName } = req.body;

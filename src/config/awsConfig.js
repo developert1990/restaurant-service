@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk';
 
-export const initialDynamo = () => {
+export const initialAWS = () => {
     const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, PORT } = process.env;
     if (!AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY || !PORT) {
         throw new Error('AWS_ACCESS_KEY, SECRET_KEY or PORT is not set');

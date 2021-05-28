@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 import AWS from 'aws-sdk';
 import { deleteOneRecord } from './deleteOneRecord';
-import { config } from '../config/dynamoConfig';
+import { config } from '../../config/dynamoConfig';
 
 const testParams = {
     ownerId: 'testOwnerID',
@@ -26,6 +26,7 @@ describe('db - deleteOneRecord()', () => {
         const params = {
             TableName: config.tableName,
             Key: { ownerId, id },
+            ReturnValues: 'ALL_OLD',
         };
         sinon.assert.calledWith(clientStub.delete, params);
         sinon.assert.calledOnce(promiseStub);

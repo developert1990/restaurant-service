@@ -1,8 +1,8 @@
 import sinon from 'sinon';
 import { getOneRestaurant } from './getOneRestaurant';
-import * as db_getOneRecord from '../db/getOneRecord';
-import * as createFakePK from '../libs/createRestaurantSK';
-import * as createFakeID from '../libs/createRestaurantID';
+import * as db_getOneRecord from '../../db/restaurant/getOneRecord';
+import * as createFakePK from '../../libs/createRestaurantSK';
+import * as createFakeID from '../../libs/createRestaurantID';
 
 const mockData = {
     Item: {

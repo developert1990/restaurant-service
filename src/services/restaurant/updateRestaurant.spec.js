@@ -1,6 +1,6 @@
 import sinon from 'sinon';
-import { UPDATE_SUCCESS } from '../constants/messages';
-import * as db_updateRecord from '../db/updateOneRecord';
+import { ADD_SUCCESS, UPDATE_SUCCESS } from '../../constants/messages';
+import * as db_updateRecord from '../../db/restaurant/updateOneRecord';
 import { updateRestaurant } from './updateRestaurant';
 
 describe('Services - updateRestaurant', () => {
@@ -30,8 +30,14 @@ describe('Services - updateRestaurant', () => {
     afterEach(() => {
         sandbox.restore();
     });
-    it('Should call db function and returens json data', async () => {
-        updateOneRecordStub.resolves();
+    it('Should call db function and returens json data - No existing item so added as new', async () => {
+        updateOneRecordStub.resolves({});
+        await updateRestaurant(req, res, next);
+        sinon.assert.calledWith(res.json, ADD_SUCCESS);
+        sinon.assert.calledOnce(updateOneRecordStub);
+    });
+    it('Should call db function and returens json data -  updated item', async () => {
+        updateOneRecordStub.resolves({ Attributes: {} });
         await updateRestaurant(req, res, next);
         sinon.assert.calledWith(res.json, UPDATE_SUCCESS);
         sinon.assert.calledOnce(updateOneRecordStub);

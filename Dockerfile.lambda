@@ -1,0 +1,4 @@
+FROM public.ecr.aws/lambda/nodejs:latest
+COPY package*.json ./
+RUN npm ci
+COPY . ./

@@ -2,9 +2,9 @@ require('dotenv').config();
 import express from 'express';
 import cors from 'cors';
 import router from './router';
-import { initialDynamo } from './config/awsConfig';
+import { initialAWS } from './config/awsConfig';
 
-const { PORT } = initialDynamo();
+const { PORT } = initialAWS();
 const app = express();
 app.use(cors());
 app.use(express.json());

@@ -1,5 +1,5 @@
-import { getAllRecords } from '../db';
-import { createRestaurantID } from '../libs';
+import { getAllRecords } from '../../db/restaurant';
+import { createRestaurantID } from '../../libs';
 
 export const getRestaurants = async (req, res, next) => {
     const { name, postalCode } = req.query;
