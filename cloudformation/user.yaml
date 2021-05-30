@@ -65,7 +65,7 @@ Resources:
       PackageType: Image
       ImageConfig:
         Command:
-          - src/services/user/s3Upload.handler
+          - /app/src/services/user/s3Upload.handler
       Code:
         ImageUri: !Sub 418329235064.dkr.ecr.us-east-1.amazonaws.com/restaurant-test:${GITSHA}
         # S3Bucket: cloudformation-users3-dev
