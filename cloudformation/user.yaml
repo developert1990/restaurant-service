@@ -1,6 +1,12 @@
 Parameters:
   GITSHA:
     Type: String
+  AWS_ACCESS_KEY_ID:
+    Type: String
+  AWS_SECRET_ACCESS_KEY:
+    Type: String
+  PORT:
+    Type: String
 
 Resources:
 # aws cloudformation update-stack describe-stacks --template-body file://user.yaml --stack-name cloudFormation-userStack-dev  --profile default
@@ -70,6 +76,11 @@ Resources:
         ImageUri: !Sub 418329235064.dkr.ecr.us-east-1.amazonaws.com/restaurant-test:${GITSHA}
         # S3Bucket: cloudformation-users3-dev
         # S3Key: 'sangmeanTest'
+      Environment:
+        Variables:
+          AWS_ACCESS_KEY_ID: !Ref AWS_ACCESS_KEY_ID
+          AWS_SECRET_ACCESS_KEY: !Ref AWS_SECRET_ACCESS_KEY
+          PORT: !Ref PORT
       Role: !GetAtt 'UserIAMRole.Arn'
       FunctionName: "cloudFormation-userTesting2"
 
