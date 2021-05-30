@@ -76,11 +76,6 @@ Resources:
         ImageUri: !Sub 418329235064.dkr.ecr.us-east-1.amazonaws.com/restaurant-test:${GITSHA}
         # S3Bucket: cloudformation-users3-dev
         # S3Key: 'sangmeanTest'
-      Environment:
-        Variables:
-          AWS_ACCESS_KEY_ID: !Ref KeyId
-          AWS_SECRET_ACCESS_KEY: !Ref SecretKey
-          PORT: !Ref PORT
       Role: !GetAtt 'UserIAMRole.Arn'
       FunctionName: "cloudFormation-userTesting2"
 
