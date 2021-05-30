@@ -45,8 +45,8 @@ aws-lambda-update:
 	--template-body file://cloudformation/user.yaml \
 	--stack-name cloudFormation-userStack-dev  \
 	--parameters  ParameterKey=GITSHA,ParameterValue=${GIT_SHA} \
-	ParameterKey=AWS_ACCESS_KEY_ID,ParameterValue=${AWS_ACCESS_KEY_ID} \
-	ParameterKey=AWS_SECRET_ACCESS_KEY,ParameterValue=${AWS_SECRET_ACCESS_KEY} \
+	ParameterKey=KeyId,ParameterValue=${AWS_ACCESS_KEY_ID} \
+	ParameterKey=SecretKey,ParameterValue=${AWS_SECRET_ACCESS_KEY} \
 	ParameterKey=PORT,ParameterValue=${PORT} \
 	--profile default \
 	--capabilities CAPABILITY_IAM

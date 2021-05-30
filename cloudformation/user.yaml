@@ -1,9 +1,9 @@
 Parameters:
   GITSHA:
     Type: String
-  AWS_ACCESS_KEY_ID:
+  KeyId:
     Type: String
-  AWS_SECRET_ACCESS_KEY:
+  SecretKey:
     Type: String
   PORT:
     Type: String
@@ -78,8 +78,8 @@ Resources:
         # S3Key: 'sangmeanTest'
       Environment:
         Variables:
-          AWS_ACCESS_KEY_ID: !Ref AWS_ACCESS_KEY_ID
-          AWS_SECRET_ACCESS_KEY: !Ref AWS_SECRET_ACCESS_KEY
+          AWS_ACCESS_KEY_ID: !Ref KeyId
+          AWS_SECRET_ACCESS_KEY: !Ref SecretKey
           PORT: !Ref PORT
       Role: !GetAtt 'UserIAMRole.Arn'
       FunctionName: "cloudFormation-userTesting2"
