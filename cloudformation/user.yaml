@@ -1,12 +1,6 @@
 Parameters:
   GITSHA:
     Type: String
-  KeyId:
-    Type: String
-  SecretKey:
-    Type: String
-  PORT:
-    Type: String
 
 Resources:
 # aws cloudformation update-stack describe-stacks --template-body file://user.yaml --stack-name cloudFormation-userStack-dev  --profile default
