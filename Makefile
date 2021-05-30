@@ -41,7 +41,12 @@ aws-lambda-update:
 	@echo "Updating aws lambda cloudFormation"
 	make build-lambda
 	make ecr-push
-	make aws-update
+	aws cloudformation update-stack \
+	--template-body file://cloudformation/user.yaml \
+	--stack-name cloudFormation-userStack-dev  \
+	--parameters  ParameterKey=GITSHA,ParameterValue=${GIT_SHA} \
+	--profile default \
+	--capabilities CAPABILITY_IAM
 aws-delete:
 	@echo "Updating aws cloudFormation"
 	aws cloudformation delete-stack --stack-name cloudFormation-userStack-dev  --profile default
