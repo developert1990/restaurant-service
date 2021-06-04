@@ -22,6 +22,8 @@ push:
 	@echo "Publishing image to Docker Hub repository"
 	docker push ${IMAGE}
 
+
+
 ecr-push:
 	@echo "Publishing image to Docker Hub repository"
 	aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${AWS_ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com
@@ -30,25 +32,25 @@ ecr-push:
 aws-create-stack:
 	@echo "Creating aws cloudFormation stack"
 	aws cloudformation create-stack --template-body file://cloudformation/user.yaml --stack-name cloudFormation-userStack-dev --profile default --capabilities CAPABILITY_IAM
-
+# deploy 는 create-stack 과 update-stack 을 합친것이라고 보면 되는듯.
 aws-deploy:
 	@echo "Deploying aws cloudFormation"
 	aws cloudformation deploy --template-file file://cloudformation/user.yaml --stack-name cloudFormation-userStack-dev --capabilities CAPABILITY_IAM
 aws-update:
 	@echo "Updating aws cloudFormation"
-	aws cloudformation update-stack --template-body file://cloudformation/user.yaml --stack-name cloudFormation-userStack-dev  --profile default --capabilities CAPABILITY_IAM
-aws-lambda-update:
-	@echo "Updating aws lambda cloudFormation"
-	make build-lambda
-	make ecr-push
 	aws cloudformation update-stack \
 	--template-body file://cloudformation/user.yaml \
 	--stack-name cloudFormation-userStack-dev  \
 	--parameters  ParameterKey=GITSHA,ParameterValue=${GIT_SHA} \
 	--profile default \
 	--capabilities CAPABILITY_IAM
+aws-lambda-update:
+	@echo "Updating aws lambda cloudFormation"
+	make build-lambda
+	make ecr-push
+	make aws-update
 aws-delete:
-	@echo "Updating aws cloudFormation"
+	@echo "Deleting aws cloudFormation"
 	aws cloudformation delete-stack --stack-name cloudFormation-userStack-dev  --profile default
 
 .PHONY: build-and-test build test push

@@ -1,7 +1,7 @@
 require('dotenv').config();
 const AWS = require('aws-sdk');
 
-const initialAWS = () => {
+export const initialAWS = () => {
     const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, PORT } = process.env;
     if (!AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY || !PORT) {
         throw new Error('AWS_ACCESS_KEY, SECRET_KEY or PORT is not set');
@@ -12,6 +12,6 @@ const initialAWS = () => {
     return { PORT };
 };
 
-module.exports = {
-    initialAWS,
-};
+// module.exports = {
+//     initialAWS,
+// };

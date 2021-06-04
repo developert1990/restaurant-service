@@ -73,6 +73,23 @@ Resources:
       Role: !GetAtt 'UserIAMRole.Arn'
       FunctionName: "cloudFormation-userTesting2"
 
+  # UserLambda:
+  #   Type: AWS::Lambda::Function
+  #   Properties:
+  #     Description: First Example Sangmean
+  #     # Handler: s3Upload.handler
+  #     # Runtime: nodejs14.x
+  #     PackageType: Image
+  #     ImageConfig:
+  #       Command:
+  #         - /app/src/services/user/1234.handler
+  #     Code:
+  #       ImageUri: !Sub 418329235064.dkr.ecr.us-east-1.amazonaws.com/restaurant-test:${GITSHA}
+  #       # S3Bucket: cloudformation-users3-dev
+  #       # S3Key: 'sangmeanTest'
+  #     Role: !GetAtt 'UserIAMRole.Arn'
+  #     FunctionName: "cloudFormation-userTesting3"
+
   UserLambdaFunctionEventSourceMapping:
     Type: AWS::Lambda::EventSourceMapping
     Properties:
@@ -100,10 +117,7 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5
-  # LambdaUserEventMapping:
-  #   Type: AWS::Lambda::EventSourceMapping
-  #   Properties:
-  #     FunctionName: eventSourceMapping-cloudFormation
+
 
   # UserEventMapping:
   #   Type: AWS::SQS::EventSourceMapping
