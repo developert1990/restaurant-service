@@ -3,3 +3,4 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 COPY . ./
+# CMD [ "/app/src/services/user/controllers" ]

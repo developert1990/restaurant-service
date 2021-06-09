@@ -14,6 +14,134 @@ Resources:
   #   Type: AWS::S3::Bucket
   #   Properties:
   #     BucketName: user-s3-dev
+
+  UserLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      Description: First Example Sangmean
+      # Handler: s3Upload.handler
+      # Runtime: nodejs14.x
+      PackageType: Image
+      ImageConfig:
+        Command:
+          - /app/src/services/user/controllers/testUser.handler
+      Code:
+        ImageUri: !Sub 418329235064.dkr.ecr.us-east-1.amazonaws.com/restaurant-user:${GITSHA}
+        # S3Bucket: cloudformation-users3-dev
+        # S3Key: 'sangmeanTest'
+      Role: !GetAtt 'UserIAMRole.Arn'
+      FunctionName: "cloudFormation-userTesting2"
+  
+  UserLambdaFunctionEventSourceMapping:
+    Type: AWS::Lambda::EventSourceMapping
+    Properties:
+      BatchSize: 10
+      Enabled: true
+      EventSourceArn: !GetAtt UserSQS.Arn
+      FunctionName: !GetAtt UserLambda.Arn
+
+  CreateUserLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      Description: First Example Sangmean
+      # Handler: s3Upload.handler
+      # Runtime: nodejs14.x
+      PackageType: Image
+      ImageConfig:
+        Command:
+          - /app/src/services/user/controllers/createUser.handler
+      Code:
+        ImageUri: !Sub 418329235064.dkr.ecr.us-east-1.amazonaws.com/restaurant-user:${GITSHA}
+        # S3Bucket: cloudformation-users3-dev
+        # S3Key: 'sangmeanTest'
+      Role: !GetAtt 'UserIAMRole.Arn'
+      FunctionName: "cloudFormation-userTesting3"
+      
+  UserApiGatewayRESTApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Description: Example API Gateway
+      EndpointConfiguration:
+        Types:
+          - EDGE
+      Name: UserApiGateWayTest
+    # DependsOn: CreateUserLambda
+
+  UserApiGatewayResource:
+    Type: 'AWS::ApiGateway::Resource'
+    Properties:
+      RestApiId: !Ref UserApiGatewayRESTApi
+      ParentId: !GetAtt UserApiGatewayRESTApi.RootResourceId
+      PathPart: 'lambda'
+    # DependsOn: CreateUserLambda
+
+  UserApiGatewayRootMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      ApiKeyRequired: false
+      AuthorizationType: NONE
+      HttpMethod: POST
+      Integration:
+        ConnectionType: INTERNET
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateUserLambda.Arn}/invocations
+          # - lambdaArn: !GetAtt CreateUserLambda.Arn
+      ResourceId: !Ref UserApiGatewayResource
+      RestApiId: !Ref UserApiGatewayRESTApi
+      # MethodResponses:
+      #   - StatusCode: '200'
+    # DependsOn: UserApiGatewayResource
+
+  UserApiGatewayModel:
+    Type: AWS::ApiGateway::Model
+    Properties:
+      ContentType: 'application/json'
+      RestApiId: !Ref UserApiGatewayRESTApi
+      Schema: {}  
+  UserApiGatewayStage:
+    Type: AWS::ApiGateway::Stage
+    Properties:
+      DeploymentId: !Ref UserApiGatewayDeployment
+      Description: Lambda API Stage v0
+      RestApiId: !Ref UserApiGatewayRESTApi
+      StageName: 'v0'
+
+  UserApiGatewayDeployment:
+    Type: 'AWS::ApiGateway::Deployment'
+    Properties:
+      RestApiId: !Ref UserApiGatewayRESTApi
+    DependsOn: UserApiGatewayRootMethod
+
+  UserApiGatewayPermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction' 
+      FunctionName: !GetAtt CreateUserLambda.Arn
+      Principal: apigateway.amazonaws.com
+    # DependsOn: 
+    #   - UserApiGatewayDeployment
+
+  UserDynamoDB:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: cloudFormation-userDB
+      KeySchema:
+        - AttributeName: id 
+          KeyType: HASH
+        - AttributeName: name
+          KeyType: RANGE
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+        - AttributeName: name
+          AttributeType: S
+      # BillingMode: PROVISIONED 이건 설정하지 않으면 default이다. 
+      # BillingMode 가 PROVISIONED로 설정이 되게 되면 무조건 ProvisionedThroughput을 설정해야한다. 즉 BillingMode를 PAY_PER_REQUEST로 하면 ProvisionedThroughput을 지정하지 않아도 된다.
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+
   UserIAMRole:
     Type: 'AWS::IAM::Role'
     Properties:
@@ -55,70 +183,30 @@ Resources:
                   - sqs:GetQueueAttributes
                   - sqs:ChangeMessageVisibility
                 Resource: !GetAtt UserSQS.Arn
-
-  UserLambda:
-    Type: AWS::Lambda::Function
-    Properties:
-      Description: First Example Sangmean
-      # Handler: s3Upload.handler
-      # Runtime: nodejs14.x
-      PackageType: Image
-      ImageConfig:
-        Command:
-          - /app/src/services/user/s3Upload.handler
-      Code:
-        ImageUri: !Sub 418329235064.dkr.ecr.us-east-1.amazonaws.com/restaurant-test:${GITSHA}
-        # S3Bucket: cloudformation-users3-dev
-        # S3Key: 'sangmeanTest'
-      Role: !GetAtt 'UserIAMRole.Arn'
-      FunctionName: "cloudFormation-userTesting2"
-
-  # UserLambda:
-  #   Type: AWS::Lambda::Function
-  #   Properties:
-  #     Description: First Example Sangmean
-  #     # Handler: s3Upload.handler
-  #     # Runtime: nodejs14.x
-  #     PackageType: Image
-  #     ImageConfig:
-  #       Command:
-  #         - /app/src/services/user/1234.handler
-  #     Code:
-  #       ImageUri: !Sub 418329235064.dkr.ecr.us-east-1.amazonaws.com/restaurant-test:${GITSHA}
-  #       # S3Bucket: cloudformation-users3-dev
-  #       # S3Key: 'sangmeanTest'
-  #     Role: !GetAtt 'UserIAMRole.Arn'
-  #     FunctionName: "cloudFormation-userTesting3"
-
-  UserLambdaFunctionEventSourceMapping:
-    Type: AWS::Lambda::EventSourceMapping
-    Properties:
-      BatchSize: 10
-      Enabled: true
-      EventSourceArn: !GetAtt UserSQS.Arn
-      FunctionName: !GetAtt UserLambda.Arn
-
-  UserDynamoDB:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName: cloudFormation-userDB
-      KeySchema:
-        - AttributeName: id 
-          KeyType: HASH
-        - AttributeName: name
-          KeyType: RANGE
-      AttributeDefinitions:
-        - AttributeName: id
-          AttributeType: S
-        - AttributeName: name
-          AttributeType: S
-      # BillingMode: PROVISIONED 이건 설정하지 않으면 default이다. 
-      # BillingMode 가 PROVISIONED로 설정이 되게 되면 무조건 ProvisionedThroughput을 설정해야한다. 즉 BillingMode를 PAY_PER_REQUEST로 하면 ProvisionedThroughput을 지정하지 않아도 된다.
-      ProvisionedThroughput:
-        ReadCapacityUnits: 5
-        WriteCapacityUnits: 5
-
-
+        - PolicyName: Policy_api-lambda-db
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'dynamodb:BatchGetItem'
+                  - 'dynamodb:BatchWriteItem'
+                  - 'dynamodb:TagResource'
+                  - 'dynamodb:UntagResource'
+                  - 'dynamodb:PutItem'
+                  - 'dynamodb:DeleteItem'
+                  - 'dynamodb:GetItem'
+                  - 'dynamodb:Scan'
+                  - 'dynamodb:Query'
+                  - 'dynamodb:UpdateItem'
+                  - 'lambda:*'
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - 'logs:CreateLogGroup'
+                  - 'logs:CreateLogStream'
+                  - 'logs:PutLogEvents'
+                Resource: '*'
   # UserEventMapping:
   #   Type: AWS::SQS::EventSourceMapping
 
@@ -130,3 +218,28 @@ Resources:
 #  - aws cloudformation describe-stack-events --stack-name ucloudFormation-userStack-dev
 # delete Stack
 #  - aws cloudformation delete-stack --stack-name cloudFormation-userStack-dev 
+
+
+
+
+
+
+
+
+
+# Resources:
+#   UpdateUserFunction:
+#     Type: AWS::Lambda::Function
+#     Properties:
+#       Code:
+#         ImageUri: xxx/yyy:latest
+#       ImageConfig:
+#         Command: "services/users/controllers/updateUser.handler"
+
+#   GetUserFunction:
+#     Type: AWS::Lambda::Function
+#     Properties:
+#       Code:
+#         ImageUri: xxx/yyy:latest
+#       ImageConfig:
+#         Command: "services/users/controllers/getUser.handler"

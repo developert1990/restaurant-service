@@ -1,0 +1,48 @@
+service: Restaurant
+
+plugins:
+  - serverless-offline
+  - serverless-webpack
+  - serverless-package-external
+  - serverless-plugin-include-dependencies
+
+package:
+  individually: true
+
+custom:
+  dotenv:
+    path: ../../.env
+  packageExternal:
+    external:
+      - '../../config'
+  webpack:
+    webpackConfig: '../../../webpack.config.js'
+  serverless-offline:
+    httpPort: 7000
+
+provider:
+  name: aws
+  versionFunctions: false
+  runtime: nodejs14.x
+  stage: dev
+  region: us-east-1
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - s3:*
+      Resource: "*"
+    - Effect: "Allow"
+      Action:
+        - dynamodb:*
+      Resource: "*"
+
+functions:
+  CreateUser:
+    handler: controllers/createUser.handler
+    timeout: 30
+    events:
+      - http:
+          path: /user/
+          method: post
+          cors: true

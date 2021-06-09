@@ -1,3 +1,3 @@
 export const config = {
-    tableName: 'restaurant-service',
+    tableName: 'restaurant-user',
 };

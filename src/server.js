@@ -12,7 +12,10 @@ app.use(express.json());
 app.use('/api', router);
 
 app.use((err, req, res, next) => {
-    res.status(500).send(err.message);
+    if (!err) {
+        return res.status(404).send('NOT FOUND');
+    }
+    res.status(500).send('INTERNAL SERVER ERROR');
 });
 
 export const server = app.listen(PORT || 7707);
