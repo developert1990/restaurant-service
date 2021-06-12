@@ -1,48 +1,29 @@
 require('dotenv').config();
-const AWS = require('aws-sdk');
-const { initialAWS } = require('../../../config/awsConfig');
-const { config } = require('../../../config/dynamoConfig');
-const uuid = require('uuid');
+// const { initialAWS } = require('../../../config/awsConfig');
+// const { addOneUser } = require('../../../db/user/addOneUser');
+// const { success, failure } = require('../../../libs/response-lib');
+// const { addUserValidation } = require('../../../middlewares/user/addUserValidation');
 
-exports.handler = (event, context, callback) => {
-    console.log('event 홍상민:>> ', event);
-    const dynamoDb = new AWS.DynamoDB.DocumentClient();
+import { initialAWS } from '../../../config/awsConfig';
+import { addOneUser } from '../../../db/user/addOneUser';
+import { failure, success } from '../../../libs/response-lib';
+import { addUserValidation } from '../../../middlewares/user/addUserValidation';
+
+export const handler = async (event, context, callback) => {
     initialAWS();
-    const datetime = new Date().toISOString();
-    const data = JSON.parse(event.body);
-    const { firstName, lastName, email, phoneNum } = data;
-    console.log('firstName :>> ', firstName);
-    console.log('lastName :>> ', lastName);
-    console.log('email :>> ', email);
-    console.log('phoneNum :>> ', phoneNum);
-    console.log('process.env.AWS_ACCESS_KEY_ID :>> ', process.env.AWS_ACCESS_KEY_ID);
-    console.log('process.env.AWS_SECRET_ACCESS_KEY :>> ', process.env.AWS_SECRET_ACCESS_KEY);
-    const params = {
-        TableName: config.tableName,
-        Item: {
-            id: uuid.v1(),
-            firstName,
-            lastName,
-            email,
-            phoneNum,
-            createdAt: datetime,
-            updatedAt: datetime,
-        },
-    };
-
-    dynamoDb.put(params, (error, data) => {
-        if (error) {
-            console.error(error);
-            callback(new Error(error));
-            return;
-        }
-
-        const response = {
-            statusCode: 201,
-            body: JSON.stringify(data.Item),
-        };
-
-        callback(null, response);
-    });
-    return { message: 'good..' };
+    try {
+        const info = event.body.firstName ? event.body : JSON.parse(event.body);
+        const { firstName, lastName, email, phoneNum } = info;
+        addUserValidation({ firstName, lastName, email, phoneNum });
+        await addOneUser({ firstName, lastName, email, phoneNum });
+        return success({
+            status: 200,
+            result: 'User has been successfully saved.',
+        });
+    } catch (error) {
+        return failure({
+            status: 409,
+            message: error.message,
+        });
+    }
 };

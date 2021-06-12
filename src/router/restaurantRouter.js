@@ -1,5 +1,5 @@
 import express from 'express';
-import { putValidation, deleteAndGetOneValidation, getAllValidation } from '../middlewares';
+import { putValidation, deleteAndGetOneValidation, getAllValidation } from '../middlewares/restaurant';
 import { addRestaurant, deleteRestaurant, getOneRestaurant, getRestaurants, updateRestaurant } from '../services/restaurant';
 
 const restaurantRouter = express.Router();

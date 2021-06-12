@@ -43,6 +43,6 @@ functions:
     timeout: 30
     events:
       - http:
-          path: /user/
+          path: /user
           method: post
           cors: true

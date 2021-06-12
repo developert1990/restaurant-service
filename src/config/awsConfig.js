@@ -2,7 +2,6 @@ require('dotenv').config();
 const AWS = require('aws-sdk');
 
 const initialAWS = () => {
-    console.log('process.env 체크해보자 :>> ', process.env);
     const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, PORT } = process.env;
     if (!AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY) {
         throw new Error('AWS_ACCESS_KEY or SECRET_KEY is not set');

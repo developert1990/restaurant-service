@@ -175,7 +175,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/Restaurant/dev/1623220203953-2021-06-09T06:30:03.953Z/CreateUser.zip"
+          "S3Key": "serverless/Restaurant/dev/1623399621427-2021-06-11T08:20:21.427Z/CreateUser.zip"
         },
         "Handler": "controllers/createUser.handler",
         "Runtime": "nodejs14.x",
@@ -308,7 +308,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1623220198869": {
+    "ApiGatewayDeployment1623399616998": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
