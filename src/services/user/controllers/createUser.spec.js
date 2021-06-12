@@ -1,5 +1,5 @@
 import sinon from 'sinon';
-import { handler } from '../controllers/createUser';
+import { handler } from './createUser';
 import * as db_addOne from '../../../db/user/addOneUser';
 import * as lib_response from '../../../libs/response-lib';
 
@@ -11,15 +11,15 @@ describe('Services - createUser', () => {
         addOneUserStub = sandbox.stub(db_addOne, 'addOneUser');
         successStub = sandbox.stub(lib_response, 'success');
         failureStub = sandbox.stub(lib_response, 'failure');
+        event = {
+            body: undefined,
+        };
     });
     afterEach(() => {
         sandbox.restore();
     });
-    event = {
-        body: undefined,
-    };
 
-    it('Should not call db function with 409 error', async () => {
+    it('Should not call db function, return 409 error', async () => {
         event = { 'body': { 'firstName': 'first', 'lastName': 'last', 'email': 'email' } };
         addOneUserStub.throws();
         await handler(event, context, callback);

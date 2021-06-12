@@ -1,9 +1,4 @@
 require('dotenv').config();
-// const { initialAWS } = require('../../../config/awsConfig');
-// const { addOneUser } = require('../../../db/user/addOneUser');
-// const { success, failure } = require('../../../libs/response-lib');
-// const { addUserValidation } = require('../../../middlewares/user/addUserValidation');
-
 import { initialAWS } from '../../../config/awsConfig';
 import { addOneUser } from '../../../db/user/addOneUser';
 import { failure, success } from '../../../libs/response-lib';

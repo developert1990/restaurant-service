@@ -46,3 +46,11 @@ functions:
           path: /user
           method: post
           cors: true
+  DeleteUser:
+    handler: controllers/deleteUser.handler
+    timeout: 30
+    events:
+      - http:
+          path: /user
+          method: delete
+          cors: true

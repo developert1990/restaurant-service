@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk';
 import { config } from '../../config/dynamoConfig';
-const uuid = require('uuid');
+import { createUserId } from '../../libs';
 
 export const addOneUser = async ({ firstName, lastName, email, phoneNum }) => {
     const dynamoDb = new AWS.DynamoDB.DocumentClient();
@@ -8,7 +8,7 @@ export const addOneUser = async ({ firstName, lastName, email, phoneNum }) => {
     const params = {
         TableName: config.tableName,
         Item: {
-            id: uuid.v1(),
+            id: createUserId({ firstName, lastName }),
             firstName,
             lastName,
             email,
