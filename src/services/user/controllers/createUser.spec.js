@@ -27,13 +27,13 @@ describe('Services - createUser', () => {
         sinon.assert.calledOnce(failureStub);
         sinon.assert.calledWith(failureStub, {
             status: 409,
-            message: '\"phoneNum\" is required',
+            message: '\"password\" is required',
         });
     });
 
     it('Should call db function with 200', async () => {
         addOneUserStub.resolves();
-        event = { 'body': { firstName: 'first', lastName: 'last', email: 'email', phoneNum: 'phoneNum' } };
+        event = { 'body': { firstName: 'first', lastName: 'last', email: 'email', password: 'password' } };
         await handler(event, context, callback);
         sinon.assert.calledOnce(addOneUserStub);
         sinon.assert.calledOnce(successStub);

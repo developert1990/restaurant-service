@@ -1,10 +1,11 @@
 import AWS from 'aws-sdk';
 import { config } from '../../config/dynamoConfig';
-import { createUserId } from '../../libs';
+import { createUserId, encode } from '../../libs';
 
-export const addOneUser = async ({ firstName, lastName, email, phoneNum }) => {
+export const addOneUser = async ({ firstName, lastName, email, password }) => {
     const dynamoDb = new AWS.DynamoDB.DocumentClient();
     const datetime = new Date().toISOString();
+    const encodedPassword = await encode(password);
     const params = {
         TableName: config.tableName,
         Item: {
@@ -12,7 +13,7 @@ export const addOneUser = async ({ firstName, lastName, email, phoneNum }) => {
             firstName,
             lastName,
             email,
-            phoneNum,
+            password: encodedPassword,
             createdAt: datetime,
             updatedAt: datetime,
         },

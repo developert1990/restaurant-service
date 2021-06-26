@@ -83,7 +83,7 @@ serverless-deploy:
 serverless-update:
 	@echo "deploy updated lambda function"
 	cd ./src/services/user; \
-	serverless deploy function --function createUser
+	serverless deploy function --function SignIn
 
 aws-setup-deploy:
 	@echo "set up stack and deploy function"

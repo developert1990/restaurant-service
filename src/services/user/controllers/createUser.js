@@ -8,9 +8,9 @@ export const handler = async (event, context, callback) => {
     initialAWS();
     try {
         const info = event.body.firstName ? event.body : JSON.parse(event.body);
-        const { firstName, lastName, email, phoneNum } = info;
-        addUserValidation({ firstName, lastName, email, phoneNum });
-        await addOneUser({ firstName, lastName, email, phoneNum });
+        const { firstName, lastName, email, password } = info;
+        addUserValidation({ firstName, lastName, email, password });
+        await addOneUser({ firstName, lastName, email, password });
         return success({
             status: 200,
             result: 'User has been successfully saved.',

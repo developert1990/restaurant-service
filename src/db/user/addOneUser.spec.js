@@ -19,7 +19,7 @@ describe('db - addOneUser', () => {
     });
 
     it('Should call DynamoDB PUT method with correct table name', async () => {
-        await addOneUser({ firstName: 'fname', lastName: 'lname', email: 'mail', phoneNum: 'pnum' });
+        await addOneUser({ firstName: 'fname', lastName: 'lname', email: 'mail', password: 'password' });
         sinon.assert.calledOnce(dynamoDBStub.put);
     });
 
