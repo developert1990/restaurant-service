@@ -1,5 +1,5 @@
 import sinon from 'sinon';
-import { ADD_SUCCESS, UPDATE_SUCCESS } from '../../constants/messages';
+import { ADD_SUCCESS, UPDATE_SUCCESS } from '../../constants';
 import * as db_updateRecord from '../../db/restaurant/updateOneRecord';
 import { updateRestaurant } from './updateRestaurant';
 

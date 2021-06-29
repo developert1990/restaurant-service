@@ -1,27 +1,18 @@
-import { COOKIE_NAME } from '../constants/messages';
-
-function buildResponse(statusCode, body, token, refreshToken) {
-    if (token) {
-        return {
-            statusCode,
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Credentials': true,
-            },
-            body: JSON.stringify(body),
-        };
-
-    } else {
-        return {
+function buildResponse(statusCode, body, res) {
+    if (statusCode === 200) {
+        const obj = {
             statusCode,
             headers: {
                 'Access-Control-Allow-Origin': '*', // Required for CORS support to work
                 'Access-Control-Allow-Credentials': true, // Required for cookies, authorization headers with HTTPS 
             },
-            body: JSON.stringify(body),
+            body,
         };
+        res.json(obj);
+    } else {
+        res.status(statusCode).send(body);
     }
 }
 
-export function success(body, token, refreshToken) { return buildResponse(200, body, token, refreshToken); };
-export function failure(body) { return buildResponse(409, body); };
+export function success(body, res) { return buildResponse(200, body, res); };
+export function failure(body, res) { return buildResponse(409, body, res); };

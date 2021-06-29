@@ -1,4 +1,4 @@
-import { UPDATE_SUCCESS, ADD_SUCCESS } from '../../constants/messages';
+import { UPDATE_SUCCESS, ADD_SUCCESS } from '../../constants';
 import { updateOneRecord } from '../../db/restaurant';
 
 export const updateRestaurant = async (req, res, next) => {

@@ -1,4 +1,4 @@
-import { INVALID_BODY } from '../../constants/messages';
+import { INVALID_BODY } from '../../constants';
 
 export const putValidation = (req, res, next) => {
     const { name, phoneNum, address, firstName, userName } = req.body;

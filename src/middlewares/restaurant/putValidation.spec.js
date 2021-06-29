@@ -1,6 +1,6 @@
 import sinon from 'sinon';
 import { putValidation } from './putValidation';
-import { INVALID_BODY } from '../../constants/messages';
+import { INVALID_BODY } from '../../constants';
 
 const testParams = {
     name: 'sangmean',

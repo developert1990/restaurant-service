@@ -1,5 +1,5 @@
 
-import { COOKIE_EXP } from '../constants/messages';
+import { COOKIE_EXP } from '../constants';
 import jwt from 'jsonwebtoken';
 
 export const generateToken = async (user, expiresIn = COOKIE_EXP.REGULAR_TOKEN_EXP) => {

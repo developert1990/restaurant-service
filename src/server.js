@@ -3,10 +3,14 @@ import express from 'express';
 import cors from 'cors';
 import router from './router';
 import { initialAWS } from './config/awsConfig';
-
+const corsOption = {
+    origin: true,
+    credentials: true,
+    preFlightContinue: true,
+};
 const { PORT } = initialAWS();
 const app = express();
-app.use(cors());
+app.use(cors(corsOption));
 app.use(express.json());
 
 app.use('/api', router);
@@ -15,7 +19,7 @@ app.use((err, req, res, next) => {
     if (!err) {
         return res.status(404).send('NOT FOUND');
     }
-    res.status(500).send('INTERNAL SERVER ERROR');
+    res.status(500).send(err.message);
 });
 
 export const server = app.listen(PORT || 7707);

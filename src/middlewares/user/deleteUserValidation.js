@@ -1,16 +1,17 @@
 import Joi from 'joi';
 import lodashGet from 'lodash.get';
 
-export const deleteUserValidation = ({ firstName, lastName }) => {
+export const deleteUserValidation = (req, res, next) => {
     const schema = Joi.object({
         firstName: Joi.string().required(),
         lastName: Joi.string().required(),
+        email: Joi.string().required(),
     });
-    const result = schema.validate({ firstName, lastName });
+    const result = schema.validate(req.query);
     if (result.error) {
         const errorMsg = lodashGet(result, 'error.details[0].message', 'Generic error message');
-        throw new Error(errorMsg);
+        next(new Error(errorMsg));
     } else {
-        return;
+        next();
     }
 };

@@ -1,4 +1,4 @@
-import { DELETE_SUCCESS, DELETE_FAIL } from '../../constants/messages';
+import { DELETE_SUCCESS, DELETE_FAIL } from '../../constants';
 import { deleteOneRecord } from '../../db/restaurant';
 import { createRestaurantID } from '../../libs';
 import { createRestaurantSK } from '../../libs/createRestaurantSK';

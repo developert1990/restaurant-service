@@ -21,11 +21,12 @@ describe('db - deleteOneUser', () => {
     });
 
     it('Should call DynamoDB DELETE method with correct tableName', async () => {
-        await deleteOneUser({ firstName: 'first', lastName: 'last' });
+        await deleteOneUser({ firstName: 'first', lastName: 'last', email: 'e-mail' });
         const params = {
             TableName: config.tableName,
             Key: {
                 id: createUserIdStub(),
+                email: 'e-mail',
             },
         };
         sinon.assert.calledOnce(dynamodbStub.delete);

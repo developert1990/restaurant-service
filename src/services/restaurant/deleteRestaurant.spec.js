@@ -3,7 +3,7 @@ import { deleteRestaurant } from './deleteRestaurant';
 import * as db_deleteOneRecord from '../../db/restaurant/deleteOneRecord';
 import * as createFakeSK from '../../libs/createRestaurantSK';
 import * as createFakeID from '../../libs/createRestaurantID';
-import { DELETE_FAIL, DELETE_SUCCESS } from '../../constants/messages';
+import { DELETE_FAIL, DELETE_SUCCESS } from '../../constants';
 
 describe('Services - deleteRestaurant', () => {
     const sandbox = sinon.createSandbox();

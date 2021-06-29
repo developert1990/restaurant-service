@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import lodashGet from 'lodash.get';
 
-export const addUserValidation = ({ firstName, lastName, email, password }) => {
+export const addUserValidation = (req, res, next) => {
     const schema = Joi.object({
         firstName: Joi.string().required(),
         lastName: Joi.string().required(),
@@ -9,11 +9,11 @@ export const addUserValidation = ({ firstName, lastName, email, password }) => {
         password: Joi.string().required(),
     });
 
-    const result = schema.validate({ firstName, lastName, email, password });
+    const result = schema.validate(req.body);
     if (result.error) {
         const errorMsg = lodashGet(result, 'error.details[0].message', 'Generic error message');
-        throw new Error(errorMsg);
+        next(new Error(errorMsg));
     } else {
-        return;
+        next();
     }
 };

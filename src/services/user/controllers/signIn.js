@@ -1,8 +1,15 @@
-import { COOKIE_EXP } from '../../../constants/messages';
+import { COOKIE_EXP } from '../../../constants';
 import { getUser } from '../../../db/user/getUser';
 import { isMatch, failure, success, generateToken } from '../../../libs';
+import cors from 'cors';
 
 export const handler = async (event, context, callback) => {
+    const corsOption = {
+        origin: 'http://localhost:3000',
+        credentials: true,
+        preFlightContinue: true,
+    };
+    cors(corsOption);
     const { email, password } = event.body.email ? event.body : JSON.parse(event.body);
     try {
         const userData = await getUser({ email, password });

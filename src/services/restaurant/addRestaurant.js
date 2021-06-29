@@ -1,4 +1,4 @@
-import { ADD_SUCCESS } from '../../constants/messages';
+import { ADD_SUCCESS } from '../../constants';
 import { addOneRecord } from '../../db/restaurant';
 
 export const addRestaurant = async (req, res, next) => {
