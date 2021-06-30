@@ -11,9 +11,11 @@ export const COOKIE_NAME = {
 };
 
 export const COOKIE_EXP = {
-    REGULAR_TOKEN_EXP: '1m', // 5분
+    REGULAR_TOKEN_EXP: '30m', // 5분
+    REGULAR_COOKIE_EXP: 30,
     // REFRESH_TOKEN_EXP: 1000 * 60 * 60 * 2, // 2시간
-    REFRESH_TOKEN_EXP: '2m', // 30분
+    REFRESH_TOKEN_EXP: '50m', // 30분
+    REFRESH_COOKIE_EXP: 50,
 };
 
 export const DOMAIN = {

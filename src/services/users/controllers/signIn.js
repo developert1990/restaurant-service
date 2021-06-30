@@ -4,18 +4,17 @@ import { isMatch, failure, success, generateToken } from '../../../libs';
 import { setCookie } from '../../../libs/cookies';
 
 export const signin = async (req, res, next) => {
-
     const { email, password } = req.body.email ? req.body : JSON.parse(req.body);
     try {
-        const userData = await getUser({ email });
-        if (userData.Count == 0) throw new Error('User does not exist');
-        const compared = await isMatch(password, userData.Items[0].password);
+        const data = await getUser({ email });
+        if (data.Count === 0) throw new Error('User does not exist');
+        const userData = data.Items[0];
+        const compared = await isMatch(password, userData.password);
         if (!compared) throw new Error('Password is incorrect');
         const token = await generateToken(userData);
         const refreshToken = await generateToken(userData, COOKIE_EXP.REFRESH_TOKEN_EXP);
-        const { firstName, lastName, email: userEmail } = userData.Items[0];
+        const { firstName, lastName, email: userEmail } = userData;
         setCookie({ token, refreshToken }, res);
-
         return success({
             status: 200,
             userInfo: { firstName, lastName, userEmail },
@@ -24,6 +23,6 @@ export const signin = async (req, res, next) => {
         return failure({
             status: 409,
             message: error.message,
-        });
+        }, res);
     }
 };

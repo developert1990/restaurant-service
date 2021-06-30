@@ -3,6 +3,10 @@ import express from 'express';
 import cors from 'cors';
 import router from './router';
 import { initialAWS } from './config/awsConfig';
+import NodeCache from 'node-cache';
+
+export const myCache = new NodeCache({ stdTTL: 20 });
+
 const corsOption = {
     origin: true,
     credentials: true,
