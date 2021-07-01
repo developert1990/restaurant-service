@@ -3,16 +3,18 @@ import { createUser } from './createUser';
 import * as db_addOne from '../../../db/user/addOneUser';
 import * as lib_response from '../../../libs/response-lib';
 import * as db_getUser from '../../../db/user/getUser';
+import * as lib_email from '../../../libs/email';
 
 describe('Services - createUser', () => {
     const sandbox = sinon.createSandbox();
-    let req, res, next, addOneUserStub, successStub, failureStub, getUserStub;
+    let req, res, next, addOneUserStub, successStub, failureStub, getUserStub, welcomEmailStub;
 
     beforeEach(() => {
         addOneUserStub = sandbox.stub(db_addOne, 'addOneUser');
         successStub = sandbox.stub(lib_response, 'success');
         failureStub = sandbox.stub(lib_response, 'failure');
         getUserStub = sandbox.stub(db_getUser, 'getUser');
+        welcomEmailStub = sandbox.stub(lib_email.sendEmail, 'welcomEmail');
         req = {
             body: undefined,
         };

@@ -2,7 +2,7 @@ import AWS from 'aws-sdk';
 import { config } from '../../config/dynamoConfig';
 import { createUserId, encode } from '../../libs';
 
-export const addOneUser = async ({ firstName, lastName, email, password }) => {
+export const addOneUser = async ({ firstName, lastName, email, password, code }) => {
     const dynamoDb = new AWS.DynamoDB.DocumentClient();
     const datetime = new Date().toISOString();
     const encodedPassword = await encode(password);
@@ -16,6 +16,8 @@ export const addOneUser = async ({ firstName, lastName, email, password }) => {
             password: encodedPassword,
             createdAt: datetime,
             updatedAt: datetime,
+            code,
+            verified: false,
         },
     };
 
