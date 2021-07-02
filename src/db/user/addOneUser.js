@@ -18,6 +18,7 @@ export const addOneUser = async ({ firstName, lastName, email, password, code })
             updatedAt: datetime,
             code,
             verified: false,
+            isAdmin: false,
         },
     };
 
