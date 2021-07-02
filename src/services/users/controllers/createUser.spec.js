@@ -51,7 +51,7 @@ describe('Services - createUser', () => {
         sinon.assert.calledOnce(successStub);
         sinon.assert.calledWith(successStub, {
             status: 200,
-            result: 'User has been successfully saved.',
+            result: 'Congratulations! You have been successfully registered.',
         });
     });
 

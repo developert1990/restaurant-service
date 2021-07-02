@@ -38,14 +38,27 @@ describe('Services - signin', () => {
         sinon.assert.notCalled(successStub);
     });
 
-    it('User exist, should call db function with 200', async () => {
+    it('User exist and verified, should call db function with 200', async () => {
         req.body = { 'email': 'fakeEmail', 'password': 'fakePassword' };
-        getUserStub.resolves({ Items: [{ firstName: 'fn', lastName: 'ln', email: 'email' }], Count: 1 });
+        getUserStub.resolves({ Items: [{ firstName: 'fn', lastName: 'ln', email: 'email', verified: true }], Count: 1 });
         isMatchStub.resolves(true);
         tokenStub.resolves('fakeToken');
         await signin(req, res, next);
         sinon.assert.notCalled(failureStub);
         sinon.assert.calledOnce(successStub);
+    });
+
+    it('User exist but not verified, return 409 error', async () => {
+        req.body = { 'email': 'fakeEmail', 'password': 'fakePassword' };
+        getUserStub.resolves({ Items: [{ firstName: 'fn', lastName: 'ln', email: 'email', verified: false }], Count: 1 });
+        isMatchStub.resolves(true);
+        tokenStub.resolves('fakeToken');
+        await signin(req, res, next);
+        sinon.assert.notCalled(successStub);
+        sinon.assert.calledWith(failureStub, {
+            status: 409,
+            message: 'Your Email is not verified yet. Please verify the email to sign in.',
+        });
     });
 
 });

@@ -6,13 +6,15 @@ import { signin } from '../services/users/controllers/signIn';
 import { initialAWS } from '../config/awsConfig';
 import { deleteUserValidation } from '../middlewares/user/deleteUserValidation';
 import { authUser } from '../services/users/controllers/authUser';
+import { verifyUser } from '../services/users/controllers/verifyUser';
 
 initialAWS();
 const userRouter = express.Router();
 
 userRouter.post('/user', signin);
 userRouter.delete('/user', deleteUserValidation, deleteUser);
-userRouter.put('/user', addUserValidation, createUser);
+userRouter.put('/user', addUserValidation, createUser); // put: entire update
 userRouter.get('/user', authUser);
+userRouter.patch('/user', verifyUser); // patch: partial update
 
 export default userRouter;

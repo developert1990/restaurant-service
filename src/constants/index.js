@@ -8,6 +8,7 @@ export const COOKIE_NAME = {
     RESTAURANT_COOKIE: 'restaurant_token',
     RESTAURANT_COOKIE_REFRESH: 'restaurant_refresh_token',
     RESTAURANT_USER: 'restaurant_user',
+    RESTAURANT_REGISTER: 'restaurant_register',
 };
 
 export const COOKIE_EXP = {
@@ -16,6 +17,11 @@ export const COOKIE_EXP = {
     // REFRESH_TOKEN_EXP: 1000 * 60 * 60 * 2, // 2시간
     REFRESH_TOKEN_EXP: '50m', // 30분
     REFRESH_COOKIE_EXP: 50,
+    REGISTER_COOKIE_EXP: 3,
+};
+export const HTTP = {
+    TRUE: true,
+    FALSE: false,
 };
 
 export const DOMAIN = {
