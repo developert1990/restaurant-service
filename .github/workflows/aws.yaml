@@ -18,13 +18,13 @@ jobs:
       - name: Setting up SSH
         run: |
           mkdir -p ~/.ssh
-          echo "$SSH_KEY" > ~/.ssh/ec2.key
-          chmod 600 ~/.ssh/ec2.key
+          echo "$SSH_KEY" > ~/.ssh/ec2.pem
+          chmod 600 ~/.ssh/ec2.pem
           cat >> ~/.ssh/config << END
           Host aws
             Hostname $SSH_HOST
             user ubuntu
-            IdentityFile ~/.ssh/ec2.key
+            IdentityFile ~/.ssh/ec2.pem
             StrictHostKeyChecking no
           END
           cat ~/.ssh/config
