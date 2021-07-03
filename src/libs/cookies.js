@@ -9,3 +9,7 @@ export const setCookie = (cookieData, cookieName, cookieExp, httpOnly, res) => {
         domain: getCookieDomain(),
     });
 };
+
+export const removeCookie = (cookieName, res) => {
+    res.clearCookie(cookieName);
+};

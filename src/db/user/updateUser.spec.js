@@ -1,8 +1,8 @@
 import sinon from 'sinon';
 import AWS from 'aws-sdk';
-import { updateVerifyUser } from './updateVerifyUser';
+import { updateUser } from './updateUser';
 
-describe('db - getUser', () => {
+describe('db - updateUser()', () => {
     const sandbox = sinon.createSandbox();
     const promiseStub = sandbox.stub();
     const dynamodbStub = {
@@ -16,7 +16,8 @@ describe('db - getUser', () => {
     });
 
     it('Should call DynamoDB UPDATE method with correct table name', async () => {
-        await updateVerifyUser({ id: 'fakeId', email: 'fakeEmail' });
+        const updateObj = { 'verified': true };
+        await updateUser('fakeId', 'fakeEmail', updateObj);
         sinon.assert.calledOnce(dynamodbStub.update);
     });
 });

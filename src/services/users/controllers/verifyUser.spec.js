@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 import { verifyUser } from './verifyUser';
 import * as lib_response from '../../../libs/response-lib';
-import * as db_updateVerifyUser from '../../../db/user/updateVerifyUser';
+import * as db_updateUser from '../../../db/user/updateUser';
 import * as db_getUser from '../../../db/user/getUser';
 
 describe('Services - verifyUser', () => {
@@ -10,7 +10,7 @@ describe('Services - verifyUser', () => {
     beforeEach(() => {
         succesStub = sandbox.stub(lib_response, 'success');
         failureStub = sandbox.stub(lib_response, 'failure');
-        updateVerifyUserStub = sandbox.stub(db_updateVerifyUser, 'updateVerifyUser');
+        updateVerifyUserStub = sandbox.stub(db_updateUser, 'updateUser');
         getUserStub = sandbox.stub(db_getUser, 'getUser');
         req = {
             query: {
