@@ -28,6 +28,8 @@ jobs:
             StrictHostKeyChecking no
           END
           cat ~/.ssh/config
+          printenv | grep SSH_KEY
+          printenv | grep SSH_HOST
         env:
           SSH_KEY: ${{secrets.SSH_KEY}}
           SSH_HOST: ${{secrets.SSH_HOST}}
