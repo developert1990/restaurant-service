@@ -19,7 +19,7 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           echo "$SSH_KEY" > ~/.ssh/ec2.key
-          chmod 680 ~/.ssh/ec2.key
+          chmod 600 ~/.ssh/ec2.key
           cat >> ~/.ssh/config << END
           Host aws
             Hostname $SSH_HOST
