@@ -31,7 +31,7 @@ jobs:
           printenv | grep SSH_KEY
           printenv | grep SSH_HOST
         env:
-          SSH_KEY: ${{secrets.SSH_KEY}}
+          SSH_KEY: ${{secrets.SSH_KEY}} # local에 있는 aws_ec2_sangmean.pem 파일의 안에 내용값이다. 아마존ec2에서 받은 private ssh 키 값
           SSH_HOST: ${{secrets.SSH_HOST}}
       - name: Log into ec2 and deploy
         run: |
