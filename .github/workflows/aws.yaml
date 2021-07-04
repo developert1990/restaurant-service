@@ -34,12 +34,12 @@ jobs:
           SSH_KEY: ${{secrets.SSH_KEY}} # local에 있는 aws_ec2_sangmean.pem 파일의 안에 내용값이다. 아마존ec2에서 받은 private ssh 키 값
           SSH_HOST: ${{secrets.SSH_HOST}}
       - name: Log into ec2 and deploy
-          # ssh aws docker run -e NODE_ENV=production --name $CONTAINER_NAME -d -p 7707:7707 $IMAGE_NAME
+          # ssh aws docker run --name restaurant-server -d -p 7707:7707 magicq6265/restaurant-service-server:e572aaa
         run: |
           export IMAGE_NAME=$IMAGE:${{github.event.inputs.gitSha}}
           printenv | grep IMAGE_NAME
           export CONTAINER_NAME=${{github.event.inputs.containerName}}
-          ssh aws docker run --name restaurant-server -d -p 7707:7707 magicq6265/restaurant-service-server:e572aaa
+          ssh aws docker run -e NODE_ENV=production --name $CONTAINER_NAME -d -p 7707:7707 $IMAGE_NAME
         env:
           # IMAGE: ${{secrets.IMAGE}}
           IMAGE: magicq6265/restaurant-service-server
