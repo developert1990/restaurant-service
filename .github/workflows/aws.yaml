@@ -38,6 +38,6 @@ jobs:
           export IMAGE_NAME=$IMAGE:${{github.event.inputs.gitSha}}
           printenv | grep IMAGE_NAME
           export CONTAINER_NAME=${{github.event.inputs.containerName}}
-          ssh aws mkdir testFolder
+          ssh aws docker run -e NODE_ENV=production --name $CONTAINER_NAME -d -p 7707:7707 $IMAGE_NAME
         env:
           IMAGE: ${{secrets.IMAGE}}
