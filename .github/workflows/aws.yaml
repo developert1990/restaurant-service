@@ -40,4 +40,5 @@ jobs:
           export CONTAINER_NAME=${{github.event.inputs.containerName}}
           ssh aws docker run -e NODE_ENV=production --name $CONTAINER_NAME -d -p 7707:7707 $IMAGE_NAME
         env:
-          IMAGE: ${{secrets.IMAGE}}
+          # IMAGE: ${{secrets.IMAGE}}
+          IMAGE: magicq6265/restaurant-service-server
