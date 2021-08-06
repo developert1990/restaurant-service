@@ -4,6 +4,9 @@ import cors from 'cors';
 import router from './router';
 import { initialAWS } from './config/awsConfig';
 import NodeCache from 'node-cache';
+import http from 'http';
+import { debug as createDebug } from 'debug';
+const debug = createDebug('api');
 
 export const myCache = new NodeCache({ stdTTL: 20 });
 
@@ -26,4 +29,6 @@ app.use((err, req, res, next) => {
     res.status(500).send(err.message);
 });
 
-export const server = app.listen(PORT || 7707);
+export const server = app.listen(PORT || 7707, () => {
+    debug(`Listening on ${PORT}`);
+});

@@ -4,7 +4,7 @@
     "description": "",
     "main": ".mocharc.js",
     "scripts": {
-        "start": "nodemon --exec babel-node src/server",
+        "start": "DEBUG=api nodemon --exec babel-node src/server",
         "test": "mocha",
         "dev": "mocha --watch",
         "lint": "eslint . --ext .js --ignore-pattern node_modules/ --fix"
@@ -25,6 +25,7 @@
         "bcryptjs": "^2.4.3",
         "cookie": "^0.4.1",
         "cors": "^2.8.5",
+        "debug": "^4.3.2",
         "dotenv": "^8.2.0",
         "eslint": "^7.24.0",
         "express": "^4.17.1",
@@ -33,6 +34,7 @@
         "lodash.get": "^4.4.2",
         "node-cache": "^5.1.2",
         "nodemailer": "^6.6.2",
+        "stripe": "^8.163.0",
         "uuid": "^8.3.2"
     },
     "devDependencies": {
