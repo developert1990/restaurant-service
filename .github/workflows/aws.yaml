@@ -39,7 +39,7 @@ jobs:
         run: |
           export IMAGE_NAME=$IMAGE:${{github.event.inputs.gitSha}}
           export CONTAINER_NAME=${{github.event.inputs.containerName}}
-          ssh aws docker run -e NODE_ENV=production --name $CONTAINER_NAME -d -p 7707:7707 $IMAGE_NAME
+          ssh aws docker run -e NODE_ENV=production --name $CONTAINER_NAME -d -p 7001:7001 $IMAGE_NAME
         env:
           # IMAGE: ${{secrets.IMAGE}}
           IMAGE: ${{secrets.DOCKER_IMAGE}} # Makefile에 DOCKER_USERNAME/APP_NAME 임
