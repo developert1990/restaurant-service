@@ -8,6 +8,9 @@ on:
       containerName:
         description: 'docker container name'
         required: true
+      containerDate:
+        description: 'Docker container created date(MAR-28-2021)'
+        required: true
 
 jobs:
   deployment:
